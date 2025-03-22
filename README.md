@@ -1,4 +1,4 @@
-# Wartlock
+# <img src="resources/wartlock_logo.png" width="30" height="30"> Wartlock
 Wartlock is a user-friendly and secure cryptocurrency wallet designed specifically for the WART blockchain. It provides a graphical interface for managing WART assets, sending and receiving transactions, and ensuring private key security.
 
 > Beta Notice: Wartlock is currently in its beta phase. Some security features are still in development, and the wallet is not yet fully audited. Use it at your own risk.
