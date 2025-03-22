@@ -20,6 +20,8 @@ Wartlock is a user-friendly and secure cryptocurrency wallet designed specifical
 If you were already using [andrewcrypto777/wart-wallet](https://github.com/andrewcrypto777/wart-wallet) importing your wallet on wartlock using your mnemonic **isn't possible at the moment**, since andrew's wallet is using a different stack we can't generate the same address due to the different library implementations on Python and Nodejs, *Yet it's still possible to import your wallets by copying `wartlock.db` into Wartlock directory**, Wartlock do have an almost identical database integrations to andrew's wallet.
 > Copying `wartlock.db` is a temporary solution, We're working on a recover wallet using private key feature soon
 
+## Contributing
+We welcome feedback and contributions! If you find bugs or have feature suggestions, open an issue or submit a pull request
 
 ## Developer fees (Optional)
 To keep Wartlock growing and improving, we’ve included an optional 5% developer fee on wallet transactions. This small contribution helps **fund ongoing development, security enhancements, and new features.**
