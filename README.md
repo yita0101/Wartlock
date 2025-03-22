@@ -47,7 +47,14 @@ aca4916c89b8fb47784d37ad592d378897f616569d3ee0d4
 You can also support Wartlock by mining on the developer address using **BZMiner**:  
 ```bash
 bzminer -a warthog -p stratum+tcp://de.warthog.herominers.com:1143 -w aca4916c89b8fb47784d37ad592d378897f616569d3ee0d4.donation --nc 1
-```  
+```
+
+Or janusminer ( Make sure to replace `YOUR_NODE_IP` and `YOUR_NODE_PORT` with your node information )
+```bash
+janusminer -a aca4916c89b8fb47784d37ad592d378897f616569d3ee0d4 -h YOUR_NODE_IP -p YOUR_NODE_PORT
+```
+
 Download BZMiner here: [BZMiner Releases](https://github.com/bzminer/bzminer/releases)  
+Download JanusMiner here: [JanusMiner Releases](https://github.com/CoinFuMasterShifu/janusminer/releases)
 
 Your support helps maintain and improve Wartlock. Thank you.
