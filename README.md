@@ -29,7 +29,7 @@ When sending a transaction, the developer fee is automatically calculated—but 
 Every contribution, big or small, helps make Wartlock even better. Thank you for your support! ❤️
 > Developer donations don’t include network fees—your full contribution goes to Wartlock. The transaction is optimized for low network fees, but since it’s sent from your wallet, the fee will be deducted from your balance separately.
 
-# Support Wartlock  
+## Support Wartlock  
 
 Wartlock is an open-source project, and community support helps drive its development. If you find value in Wartlock and would like to contribute, consider donating or mining to support ongoing improvements.  
 
