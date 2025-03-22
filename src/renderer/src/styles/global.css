@@ -1,0 +1,35 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+@layer base {
+  body {
+    @apply select-none overflow-x-hidden;
+  }
+
+  ::-webkit-scrollbar {
+    @apply h-2.5 w-2.5;
+  }
+
+  ::-webkit-scrollbar-thumb {
+    @apply cursor-grab rounded-[10px] bg-default-400;
+  }
+
+  ::-webkit-scrollbar-thumb:hover {
+    @apply bg-default-500;
+  }
+}
+
+@layer utilities {
+  .scroll-sm::-webkit-scrollbar {
+    @apply h-2 w-1.5;
+  }
+
+  .scroll-sm::-webkit-scrollbar-thumb {
+    @apply cursor-grab rounded-[10px] bg-default-400;
+  }
+
+  .scroll-sm::-webkit-scrollbar-thumb:hover {
+    @apply bg-default-500;
+  }
+}
