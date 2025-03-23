@@ -1,5 +1,3 @@
-'use client'
-
 import { addToast, cn } from '@heroui/react'
 import {
   Sidebar,

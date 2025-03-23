@@ -1,87 +1,93 @@
 import Database from 'better-sqlite3'
+import fs from 'fs'
+
+if (fs.existsSync('wartwallet.db')) {
+  // Connect to the SQLite database
+  const db = new Database('wartwallet.db')
+
+  // Function to check if a column exists in a table
+  function columnExists(table: string, column: string): boolean {
+    const columns = db.prepare(`PRAGMA table_info(${table});`).all()
+    return columns.some(col => col.name === column)
+  }
+
+  // Function to check if a table exists
+  function tableExists(table: string): boolean {
+    const result = db
+      .prepare(`SELECT name FROM sqlite_master WHERE type='table' AND name=?;`)
+      .get(table)
+    return !!result
+  }
+
+  // Fix missing columns by migrating the wallets table
+  if (!columnExists('wallets', 'name') || !columnExists('wallets', 'last_modified')) {
+    console.log("Migrating 'wallets' table to add missing columns...")
+
+    // Drop incomplete migration tables if they exist
+    if (tableExists('wallets_new')) {
+      db.exec(`DROP TABLE wallets_new;`)
+    }
+
+    db.exec(`
+        CREATE TABLE wallets_new (
+            id INTEGER PRIMARY KEY AUTOINCREMENT,
+            address TEXT UNIQUE,
+            name TEXT DEFAULT '',
+            pk TEXT,
+            salt TEXT,
+            last_balance TEXT NOT NULL DEFAULT '0',
+            last_modified DATETIME NOT NULL DEFAULT CURRENT_TIMESTAMP
+        );
+    `)
+
+    // **Deduplicate before inserting**
+    db.exec(`
+        INSERT INTO wallets_new (id, address, name, pk, salt, last_balance, last_modified)
+        SELECT
+            MAX(id) AS id,  -- Keep the latest record
+            address,
+            '' AS name,  -- Default name
+            pk,
+            salt,
+            last_balance,
+            CURRENT_TIMESTAMP
+        FROM wallets
+        GROUP BY address;  -- Deduplicates entries by address
+    `)
+
+    db.exec(`DROP TABLE wallets;`)
+    db.exec(`ALTER TABLE wallets_new RENAME TO wallets;`)
+  }
+
+  // Fix missing last_modified in data table
+  if (!columnExists('data', 'last_modified')) {
+    console.log("Migrating 'data' table to add 'last_modified' column...")
+
+    if (tableExists('data_new')) {
+      db.exec(`DROP TABLE data_new;`)
+    }
+
+    db.exec(`
+        CREATE TABLE data_new (
+            id INTEGER PRIMARY KEY AUTOINCREMENT,
+            key TEXT UNIQUE,
+            value TEXT,
+            last_modified DATETIME NOT NULL DEFAULT CURRENT_TIMESTAMP
+        );
+    `)
+
+    db.exec(`
+        INSERT INTO data_new (id, key, value, last_modified)
+        SELECT id, key, value, CURRENT_TIMESTAMP FROM data;
+    `)
+
+    db.exec(`DROP TABLE data;`)
+    db.exec(`ALTER TABLE data_new RENAME TO data;`)
+  }
+}
 
 // Connect to the SQLite database
 const db = new Database('wartwallet.db')
-
-// Function to check if a column exists in a table
-function columnExists(table: string, column: string): boolean {
-  const columns = db.prepare(`PRAGMA table_info(${table});`).all()
-  return columns.some(col => col.name === column)
-}
-
-// Function to check if a table exists
-function tableExists(table: string): boolean {
-  const result = db
-    .prepare(`SELECT name FROM sqlite_master WHERE type='table' AND name=?;`)
-    .get(table)
-  return !!result
-}
-
-// Fix missing columns by migrating the wallets table
-if (!columnExists('wallets', 'name') || !columnExists('wallets', 'last_modified')) {
-  console.log("Migrating 'wallets' table to add missing columns...")
-
-  // Drop incomplete migration tables if they exist
-  if (tableExists('wallets_new')) {
-    db.exec(`DROP TABLE wallets_new;`)
-  }
-
-  db.exec(`
-      CREATE TABLE wallets_new (
-          id INTEGER PRIMARY KEY AUTOINCREMENT,
-          address TEXT UNIQUE,
-          name TEXT DEFAULT '',
-          pk TEXT,
-          salt TEXT,
-          last_balance TEXT NOT NULL DEFAULT '0',
-          last_modified DATETIME NOT NULL DEFAULT CURRENT_TIMESTAMP
-      );
-  `)
-
-  // **Deduplicate before inserting**
-  db.exec(`
-      INSERT INTO wallets_new (id, address, name, pk, salt, last_balance, last_modified)
-      SELECT
-          MAX(id) AS id,  -- Keep the latest record
-          address,
-          '' AS name,  -- Default name
-          pk,
-          salt,
-          last_balance,
-          CURRENT_TIMESTAMP
-      FROM wallets
-      GROUP BY address;  -- Deduplicates entries by address
-  `)
-
-  db.exec(`DROP TABLE wallets;`)
-  db.exec(`ALTER TABLE wallets_new RENAME TO wallets;`)
-}
-
-// Fix missing last_modified in data table
-if (!columnExists('data', 'last_modified')) {
-  console.log("Migrating 'data' table to add 'last_modified' column...")
-
-  if (tableExists('data_new')) {
-    db.exec(`DROP TABLE data_new;`)
-  }
-
-  db.exec(`
-      CREATE TABLE data_new (
-          id INTEGER PRIMARY KEY AUTOINCREMENT,
-          key TEXT UNIQUE,
-          value TEXT,
-          last_modified DATETIME NOT NULL DEFAULT CURRENT_TIMESTAMP
-      );
-  `)
-
-  db.exec(`
-      INSERT INTO data_new (id, key, value, last_modified)
-      SELECT id, key, value, CURRENT_TIMESTAMP FROM data;
-  `)
-
-  db.exec(`DROP TABLE data;`)
-  db.exec(`ALTER TABLE data_new RENAME TO data;`)
-}
 
 // Initialize tables
 db.exec(`

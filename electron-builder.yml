@@ -1,5 +1,5 @@
-appId: com.electron.app
-productName: wartlock
+appId: com.wartlock.app
+productName: Wartlock
 directories:
   buildResources: build
 files:
@@ -9,6 +9,10 @@ files:
   - '!{.eslintignore,.eslintrc.cjs,.prettierignore,.prettierrc.yaml,dev-app-update.yml,CHANGELOG.md,README.md}'
   - '!{.env,.env.*,.npmrc,pnpm-lock.yaml}'
   - '!{tsconfig.json,tsconfig.node.json,tsconfig.web.json}'
+  - '!*.db'
+  - '!**/*.db'
+  - '!*.original'
+  - '!*.lock'
 asarUnpack:
   - resources/**
 win:
@@ -40,6 +44,6 @@ appImage:
 npmRebuild: false
 publish:
   provider: generic
-  url: https://example.com/auto-updates
+  url: https://riven-labs.com/
 electronDownload:
   mirror: https://npmmirror.com/mirrors/electron/
