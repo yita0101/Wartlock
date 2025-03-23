@@ -1,0 +1,31 @@
+name: Build and Release
+
+on:
+  workflow_dispatch:
+  push:
+    branches:
+      - main
+
+jobs:
+  build-linux:
+    runs-on: ubuntu-latest
+    permissions:
+      contents: write
+    steps:
+    - name: Checkout code
+      uses: actions/checkout@v4.2.2
+    - name: Set up Docker Buildx
+      uses: docker/setup-buildx-action@v3.10.0
+    - name: Get version
+      id: get_version
+      run: |
+        echo "VERSION=$(jq -r '.version' package.json)" >> $GITHUB_ENV
+    - name: Build Linux
+      run: DOCKER_BUILDKIT=1 docker build . -f Dockerfile --output build
+    - name: Release
+      uses: softprops/action-gh-release@v2.2.1
+      with:
+        tag_name: ${{ env.VERSION }}
+        generate_release_notes: true
+        files: |
+          ./build/wartlock.AppImage
