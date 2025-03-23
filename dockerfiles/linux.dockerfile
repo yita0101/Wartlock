@@ -4,6 +4,9 @@ WORKDIR /code
 RUN npm i
 RUN npm run build:linux
 
-FROM scratch AS export-stage
+RUN apt-get update && apt-get install -y zip && \
+    zip -r /code/dist/linux-unpacked.zip /code/dist/linux-unpacked
 
-COPY --from=linux_build /code/dist/*.AppImage /output/wartlock.AppImage
+FROM scratch AS export-stage
+COPY --from=linux_build /code/dist/*.AppImage /wartlock.AppImage
+COPY --from=linux_build /code/dist/linux-unpacked.zip ./linux-portable.zip
