@@ -29,8 +29,7 @@ OR
 3. Create or Import Wallet
 
 ## Import from other wallets
-If you were already using [andrewcrypto777/wart-wallet](https://github.com/andrewcrypto777/wart-wallet) importing your wallet on wartlock using your mnemonic **isn't possible at the moment**, since andrew's wallet is using a different stack we can't generate the same address due to the different library implementations on Python and Nodejs, **Yet it's still possible to import your wallets by copying `wartlock.db` into Wartlock directory**, Wartlock do have an almost identical database integrations to andrew's wallet.
-> Copying `wartlock.db` is a temporary solution, We're working on a recover wallet using private key feature soon
+If you were already using [andrewcrypto777/wart-wallet](https://github.com/andrewcrypto777/wart-wallet) you can import your wallet by your mnemonic using the **Recover Wallet** option, **Yet it's also still possible to import your wallets by copying `wartlock.db` into Wartlock directory**, Wartlock do have an almost identical database integrations to andrew's wallet and we do have migrations in place to make `wartwallet.db` work for wartlock.
 
 > Note: **Copying the database would leave all your wallets without names, if you want to name your wallet you must edit `wartwallet.db` manually using something like DB SQLite browser**
 
