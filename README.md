@@ -34,6 +34,9 @@ If you were already using [andrewcrypto777/wart-wallet](https://github.com/andre
 
 > Note: **Copying the database would leave all your wallets without names, if you want to name your wallet you must edit `wartwallet.db` manually using something like DB SQLite browser**
 
+## Docker build
+### Linux
+Run `DOCKER_BUILDKIT=1 docker build . -t wartlock --output output` to build an AppImage and save it in the a new directory `output`.
 ## Contributing
 We welcome feedback and contributions! If you find bugs or have feature suggestions, open an issue or submit a pull request
 
@@ -45,18 +48,18 @@ When sending a transaction, the developer fee is automatically calculated—but 
 Every contribution, big or small, helps make Wartlock even better. Thank you for your support! ❤️
 > Developer donations don’t include network fees—your full contribution goes to Wartlock. The transaction is optimized for low network fees, but since it’s sent from your wallet, the fee will be deducted from your balance separately.
 
-## Support Wartlock  
+## Support Wartlock
 
-Wartlock is an open-source project, and community support helps drive its development. If you find value in Wartlock and would like to contribute, consider donating or mining to support ongoing improvements.  
+Wartlock is an open-source project, and community support helps drive its development. If you find value in Wartlock and would like to contribute, consider donating or mining to support ongoing improvements.
 
-## Donate WART  
-Send WART to the developer address:  
+## Donate WART
+Send WART to the developer address:
 ```
 aca4916c89b8fb47784d37ad592d378897f616569d3ee0d4
 ```
 
-## Mine to Support Wartlock  
-You can also support Wartlock by mining on the developer address using **BZMiner**:  
+## Mine to Support Wartlock
+You can also support Wartlock by mining on the developer address using **BZMiner**:
 ```bash
 bzminer -a warthog -p stratum+tcp://de.warthog.herominers.com:1143 -w aca4916c89b8fb47784d37ad592d378897f616569d3ee0d4.donation --nc 1
 ```
@@ -66,7 +69,7 @@ Or janusminer ( Make sure to replace `YOUR_NODE_IP` and `YOUR_NODE_PORT` with yo
 janusminer -a aca4916c89b8fb47784d37ad592d378897f616569d3ee0d4 -h YOUR_NODE_IP -p YOUR_NODE_PORT
 ```
 
-Download BZMiner here: [BZMiner Releases](https://github.com/bzminer/bzminer/releases)  
+Download BZMiner here: [BZMiner Releases](https://github.com/bzminer/bzminer/releases)
 Download JanusMiner here: [JanusMiner Releases](https://github.com/CoinFuMasterShifu/janusminer/releases)
 
 Your support helps maintain and improve Wartlock. Thank you.
