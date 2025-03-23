@@ -1,5 +1,4 @@
-FROM alpine:3.21.3 AS build
-RUN apk add musl-dev npm python3 py3-setuptools make g++ gcompat
+FROM node:lts-bookworm AS build
 COPY . /code
 WORKDIR /code
 RUN npm i
