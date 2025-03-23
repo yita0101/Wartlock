@@ -1,10 +1,10 @@
 {
   "name": "wartlock",
   "version": "1.0.0",
-  "description": "An Electron application with React and TypeScript",
+  "description": "Wartlock is a secure wallet for WART blockchain",
   "main": "./out/main/index.js",
-  "author": "example.com",
-  "homepage": "https://electron-vite.org",
+  "author": "Riven Labs",
+  "homepage": "https://riven-labs.com/",
   "type": "module",
   "license": "MIT",
   "scripts": {
@@ -32,6 +32,7 @@
     "base64url": "^3.0.1",
     "better-sqlite3": "^11.9.1",
     "bip39": "^3.1.0",
+    "crypto-browserify": "^3.12.1",
     "electron-updater": "^6.3.9",
     "elliptic": "^6.6.1",
     "esbuild": "^0.25.1",
