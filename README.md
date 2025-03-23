@@ -3,6 +3,8 @@ Wartlock is a user-friendly and secure cryptocurrency wallet designed specifical
 
 > Beta Notice: Wartlock is currently in its beta phase. Some security features are still in development, and the wallet is not yet fully audited. Use it at your own risk.
 
+> **Warning: Light mode is currently non-functional. Please avoid using it until the next update, which will include fixes.**
+
 ## Features
 - User-Friendly Interface – Simple and intuitive design for easy navigation.
 - Secure Key Management – Your private keys remain under your control.
