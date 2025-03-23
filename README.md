@@ -11,6 +11,16 @@ Wartlock is a user-friendly and secure cryptocurrency wallet designed specifical
 - Cross Platform - Wartlock is supported for (Windows, Linux and MacOS)
 
 ## Installation & Setup
+### Build from source
+> Choose the command for your system to build, then run the setup
+```
+bun i
+bun run build:win
+bun run build:linux
+bun run build:mac
+```
+OR
+
 > Wartlock is in beta. Avoid using it with large amounts of WART until a full security audit is completed.
 1. Download the latest release from Releases (link to be updated).
 2. Install & Run
