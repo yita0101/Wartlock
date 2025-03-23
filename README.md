@@ -22,7 +22,7 @@ bun run build:mac
 OR
 
 > Wartlock is in beta. Avoid using it with large amounts of WART until a full security audit is completed.
-1. Download the latest release from Releases (link to be updated).
+1. Download the latest release from [Releases](https://github.com/riven-labs/Wartlock/releases).
 2. Install & Run
 3. Create or Import Wallet
 
