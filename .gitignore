@@ -9,3 +9,5 @@ pacakge-lock.json
 *.bak
 *.db
 *.original
+.idea
+pnpm-lock.yaml
