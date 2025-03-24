@@ -34,8 +34,15 @@ If you were already using [andrewcrypto777/wart-wallet](https://github.com/andre
 > Note: **Copying the database would leave all your wallets without names, if you want to name your wallet you must edit `wartwallet.db` manually using something like DB SQLite browser**
 
 ## Docker build
-### Linux
-Run `DOCKER_BUILDKIT=1 docker build . -t wartlock --output output` to build an AppImage and save it in the a new directory `output`.
+### Build Linux:
+```
+DOCKER_BUILDKIT=1 docker build . -f dockerfiles/linux.dockerfile --output build
+```
+### Build Windows:
+```
+DOCKER_BUILDKIT=1 docker build . -f dockerfiles/win.dockerfile --output build
+```
+
 ## Contributing
 We welcome feedback and contributions! If you find bugs or have feature suggestions, open an issue or submit a pull request
 
