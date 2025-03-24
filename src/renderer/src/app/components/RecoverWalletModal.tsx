@@ -12,12 +12,14 @@ import {
 } from '@heroui/react'
 import { PasswordInput } from '@renderer/components/PasswordInput'
 import { useState } from 'react'
+import { useTranslation } from 'react-i18next'
 import { MdOutlineRestoreFromTrash } from 'react-icons/md'
 import { useWallet } from '../wallets/WalletContext'
 
 const WALLET_PASSWORD_REGEX = /^(?=.*[A-Za-z])(?=.*\d)[A-Za-z\d]{8,}/
 
 export const RecoverWalletModal = () => {
+  const { t } = useTranslation()
   const { refreshAsync } = useWallet()
   const { isOpen, onClose, onOpen } = useDisclosure()
   const [password, setPassword] = useState('')
@@ -35,9 +37,8 @@ export const RecoverWalletModal = () => {
 
     if (!WALLET_PASSWORD_REGEX.test(password)) {
       addToast({
-        title: 'Invalid Password',
-        description:
-          'Password must be at least 8 characters long and contain at least one letter and one number',
+        title: t('toasts.invalidPassword.title'),
+        description: t('toasts.invalidPassword.description'),
         color: 'danger',
       })
       return
@@ -45,8 +46,8 @@ export const RecoverWalletModal = () => {
 
     if (password !== confirmPassword) {
       addToast({
-        title: 'Mismatched Passwords',
-        description: 'Passwords do not match',
+        title: t('toasts.passwordMismatch.title'),
+        description: t('toasts.passwordMismatch.description'),
         color: 'danger',
       })
       return
@@ -62,8 +63,8 @@ export const RecoverWalletModal = () => {
       await window.dbAPI.insertWallet(wallet, address, encrypted, salt)
 
       addToast({
-        title: 'Success',
-        description: 'Wallet successfully recovered',
+        title: t('toasts.walletRecovered.title'),
+        description: t('toasts.walletRecovered.description'),
         color: 'success',
       })
 
@@ -72,14 +73,14 @@ export const RecoverWalletModal = () => {
     } catch (error: any) {
       if (error?.message?.includes('UNIQUE constraint failed')) {
         addToast({
-          title: 'Duplicate Wallet',
-          description: 'This wallet is already added',
+          title: t('toasts.duplicateWallet.title'),
+          description: t('toasts.duplicateWallet.description'),
           color: 'warning',
         })
       } else {
         addToast({
-          title: 'Error',
-          description: 'An error occurred while recovering wallet',
+          title: t('toasts.recoveryError.title'),
+          description: t('toasts.recoveryError.description'),
           color: 'danger',
         })
       }
@@ -88,12 +89,12 @@ export const RecoverWalletModal = () => {
 
   const validatePassword = (value: string) => {
     return !WALLET_PASSWORD_REGEX.test(value)
-      ? 'Password must be at least 8 characters long and contain at least one letter and one number'
+      ? t('toasts.invalidPassword.description')
       : undefined
   }
 
   const validateConfirmPassword = (value: string) => {
-    return value !== password ? 'Passwords do not match' : undefined
+    return value !== password ? t('toasts.passwordMismatch.description') : undefined
   }
 
   return (
@@ -103,7 +104,7 @@ export const RecoverWalletModal = () => {
         className="bg-secondary hover:bg-opacity-80 text-text-primary rounded-lg px-6 py-2 transition-all duration-300 flex items-center gap-2"
         startContent={<MdOutlineRestoreFromTrash size={20} />}
       >
-        恢复钱包
+        {t('common.recoverWallet')}
       </Button>
 
       <Modal
@@ -118,9 +119,9 @@ export const RecoverWalletModal = () => {
         <ModalContent>
           <div className="space-y-12 px-12 py-12">
             <ModalHeader className="block space-y-6 text-center">
-              <h3 className="text-[28px] text-text-primary">恢复钱包</h3>
+              <h3 className="text-[28px] text-text-primary">{t('recoverWallet.title')}</h3>
               <p className="text-lg font-normal text-text-tertiary">
-                恢复一个钱包来管理您的WART代币
+                {t('recoverWallet.description')}
               </p>
             </ModalHeader>
 
@@ -133,9 +134,9 @@ export const RecoverWalletModal = () => {
                 <Input
                   name="wallet"
                   type="text"
-                  errorMessage="Please enter a valid wallet name"
+                  errorMessage={t('recoverWallet.errorWalletName')}
                   labelPlacement="outside"
-                  label="Wallet Name"
+                  label={t('common.walletName')}
                   isRequired
                   size="lg"
                   autoFocus
@@ -145,9 +146,9 @@ export const RecoverWalletModal = () => {
                 <Input
                   name="mnemonic"
                   type="text"
-                  errorMessage="请输入有效的助记词"
+                  errorMessage={t('recoverWallet.errorMnemonic')}
                   labelPlacement="outside"
-                  label="助记词"
+                  label={t('common.mnemonic')}
                   isRequired
                   size="lg"
                   variant="faded"
@@ -155,9 +156,9 @@ export const RecoverWalletModal = () => {
                 />
                 <PasswordInput
                   name="password"
-                  errorMessage="请输入有效的密码"
+                  errorMessage={t('recoverWallet.errorPassword')}
                   labelPlacement="outside"
-                  label="密码"
+                  label={t('common.password')}
                   isRequired
                   size="lg"
                   variant="faded"
@@ -168,7 +169,7 @@ export const RecoverWalletModal = () => {
                 <PasswordInput
                   name="confirmPassword"
                   labelPlacement="outside"
-                  label="确认密码"
+                  label={t('common.confirmPassword')}
                   isRequired
                   size="lg"
                   validate={validateConfirmPassword}
@@ -186,7 +187,7 @@ export const RecoverWalletModal = () => {
                 fullWidth
                 radius="sm"
               >
-                恢复钱包
+                {t('common.recoverWallet')}
               </Button>
             </ModalFooter>
           </div>

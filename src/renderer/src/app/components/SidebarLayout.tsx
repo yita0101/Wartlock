@@ -6,6 +6,7 @@ import {
 } from '@renderer/components/ui/sidebar'
 import { useRequest } from 'ahooks'
 import { useState } from 'react'
+import { useTranslation } from 'react-i18next'
 import { FiSettings } from 'react-icons/fi'
 import { GoHomeFill } from 'react-icons/go'
 import { useParams } from 'react-router'
@@ -13,23 +14,23 @@ import { Wallet } from '../wallets/types'
 import { Logo } from './Logo'
 import { SwitchTheme } from './SwitchTheme'
 
-const links = [
-  {
-    label: 'Wallet Management',
-    href: '/',
-    icon: <GoHomeFill className="text-text-secondary" size={24} />,
-  },
-
-  {
-    label: 'Settings',
-    href: '/settings',
-    icon: <FiSettings className="text-text-secondary" size={24} />,
-  },
-]
-
 export const SidebarLayout = ({ children }: { children: React.ReactNode }) => {
+  const { t } = useTranslation()
   const [open, setOpen] = useState(false)
   const { walletId } = useParams<{ walletId: string }>()
+
+  const links = [
+    {
+      label: t('navigation.walletManagement'),
+      href: '/',
+      icon: <GoHomeFill className="text-text-secondary" size={24} />,
+    },
+    {
+      label: t('navigation.settings'),
+      href: '/settings',
+      icon: <FiSettings className="text-text-secondary" size={24} />,
+    },
+  ]
 
   const { data: wallet } = useRequest<Wallet, any>(
     async () => window.dbAPI.getWalletById(Number(walletId)),
@@ -66,8 +67,8 @@ export const SidebarLayout = ({ children }: { children: React.ReactNode }) => {
                     if (!privateKey || !wallet || !walletId) return
                     e.preventDefault()
                     addToast({
-                      title: 'You are logged in',
-                      description: 'Please logout first',
+                      title: t('navigation.loggedIn'),
+                      description: t('navigation.logoutFirst'),
                       color: 'danger',
                     })
                   }}

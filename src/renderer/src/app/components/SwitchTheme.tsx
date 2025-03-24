@@ -1,11 +1,13 @@
 import { Button, cn } from '@heroui/react'
 import { useTheme } from '@renderer/providers/ThemeProvider'
 import { motion } from 'framer-motion'
+import { useTranslation } from 'react-i18next'
 import { BsMoon } from 'react-icons/bs'
 import { FiSun } from 'react-icons/fi'
 
 export const SwitchTheme = () => {
   const { theme, toggleTheme } = useTheme()
+  const { t } = useTranslation()
 
   return (
     <div>
@@ -26,7 +28,7 @@ export const SwitchTheme = () => {
           animate={{ opacity: 1 }}
           className="whitespace-pre font-medium group-hover/sidebar:inline"
         >
-          {theme === 'dark' ? '暗色模式' : '亮色模式'}
+          {theme === 'dark' ? t('theme.darkMode') : t('theme.lightMode')}
         </motion.span>
       </Button>
     </div>

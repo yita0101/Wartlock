@@ -1,0 +1,90 @@
+{
+  "common": {
+    "createWallet": "Create Wallet",
+    "recoverWallet": "Recover Wallet",
+    "walletName": "Wallet Name",
+    "password": "Password",
+    "confirmPassword": "Confirm Password",
+    "mnemonic": "Mnemonic",
+    "continue": "Continue",
+    "warning": "Warning: Lose these words, lose your wallet. Store them safely!"
+  },
+  "createWallet": {
+    "title": "Create Wallet",
+    "description": "Create a new wallet to manage your WART tokens",
+    "storeMnemonic": "Store your mnemonic safely:",
+    "invalidPassword": "Invalid password format"
+  },
+  "recoverWallet": {
+    "title": "Recover Wallet",
+    "description": "Recover a wallet to manage your WART tokens",
+    "errorMnemonic": "Please enter a valid mnemonic",
+    "errorWalletName": "Please enter a valid wallet name",
+    "errorPassword": "Please enter a valid password"
+  },
+  "navigation": {
+    "walletManagement": "Wallet Management",
+    "settings": "Settings",
+    "loggedIn": "You are logged in",
+    "logoutFirst": "Please logout first"
+  },
+  "theme": {
+    "lightMode": "Light Mode",
+    "darkMode": "Dark Mode"
+  },
+  "settings": {
+    "title": "Settings",
+    "subtitle": "Customize your application preferences",
+    "appearance": "Appearance",
+    "theme": "Theme",
+    "language": "Language",
+    "selectLanguage": "Select language",
+    "darkMode": "Dark Mode",
+    "lightMode": "Light Mode",
+    "save": "Save Settings",
+    "reset": "Reset to Default",
+    "account": "Account",
+    "security": "Security",
+    "preferences": "Preferences",
+    "saved": "Settings saved successfully",
+    "peer": "Public Full Node"
+  },
+  "toasts": {
+    "passwordMismatch": {
+      "title": "Mismatched Passwords",
+      "description": "Passwords do not match"
+    },
+    "generateError": {
+      "title": "Error",
+      "description": "Failed to generate mnemonic"
+    },
+    "copied": {
+      "title": "Copied",
+      "description": "Mnemonic copied to clipboard"
+    },
+    "walletCreated": {
+      "title": "Wallet Created",
+      "description": "Your wallet has been created successfully"
+    },
+    "creationFailed": {
+      "title": "Error",
+      "description": "Failed to create wallet"
+    },
+    "invalidPassword": {
+      "title": "Invalid Password",
+      "description": "Password must be at least 8 characters long and contain at least one letter and one number"
+    },
+    "walletRecovered": {
+      "title": "Success",
+      "description": "Wallet successfully recovered"
+    },
+    "duplicateWallet": {
+      "title": "Duplicate Wallet",
+      "description": "This wallet is already added"
+    },
+    "recoveryError": {
+      "title": "Error",
+      "description": "An error occurred while recovering wallet"
+    }
+  }
+} 

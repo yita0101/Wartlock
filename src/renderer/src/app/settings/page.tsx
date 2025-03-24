@@ -1,14 +1,17 @@
+import { useTranslation } from 'react-i18next'
 import { WalletProvider } from '../wallets/WalletContext'
 import { SettingsForm } from './components/SettingsForm'
 import { SettingsNavbar } from './components/SettingsNavbar'
 
 const Settings = () => {
+  const { t } = useTranslation()
+
   return (
     <WalletProvider>
-      <div>
+      <div className="flex h-full flex-col">
         <SettingsNavbar />
         <main>
-          <section className="flex h-page items-center justify-center rounded-[20px] bg-surface p-5">
+          <section className="flex min-h-page items-start justify-center rounded-[20px] bg-surface p-8 shadow-sm">
             <SettingsForm />
           </section>
         </main>

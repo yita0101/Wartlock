@@ -1,0 +1,90 @@
+{
+  "common": {
+    "createWallet": "创建钱包",
+    "recoverWallet": "恢复钱包",
+    "walletName": "钱包名称",
+    "password": "密码",
+    "confirmPassword": "确认密码",
+    "mnemonic": "助记词",
+    "continue": "继续",
+    "warning": "警告: 丢失这些单词，就会丢失您的钱包。请安全保存!"
+  },
+  "createWallet": {
+    "title": "创建钱包",
+    "description": "创建一个新钱包来管理您的WART代币",
+    "storeMnemonic": "请安全保管您的助记词:",
+    "invalidPassword": "密码格式无效"
+  },
+  "recoverWallet": {
+    "title": "恢复钱包",
+    "description": "恢复一个钱包来管理您的WART代币",
+    "errorMnemonic": "请输入有效的助记词",
+    "errorWalletName": "请输入有效的钱包名称",
+    "errorPassword": "请输入有效的密码"
+  },
+  "navigation": {
+    "walletManagement": "钱包管理",
+    "settings": "设置",
+    "loggedIn": "您已登录",
+    "logoutFirst": "请先退出登录"
+  },
+  "theme": {
+    "lightMode": "亮色",
+    "darkMode": "暗色"
+  },
+  "settings": {
+    "title": "设置",
+    "subtitle": "自定义您的应用程序首选项",
+    "appearance": "外观",
+    "theme": "主题",
+    "language": "语言",
+    "selectLanguage": "选择语言",
+    "darkMode": "暗色模式",
+    "lightMode": "亮色模式",
+    "save": "保存设置",
+    "reset": "恢复默认",
+    "account": "账户",
+    "security": "安全",
+    "preferences": "偏好设置",
+    "saved": "设置保存成功",
+    "peer": "公共全节点"
+  },
+  "toasts": {
+    "passwordMismatch": {
+      "title": "密码不匹配",
+      "description": "两次输入的密码不一致"
+    },
+    "generateError": {
+      "title": "错误",
+      "description": "生成助记词失败"
+    },
+    "copied": {
+      "title": "已复制",
+      "description": "助记词已复制到剪贴板"
+    },
+    "walletCreated": {
+      "title": "钱包已创建",
+      "description": "您的钱包已成功创建"
+    },
+    "creationFailed": {
+      "title": "错误",
+      "description": "创建钱包失败"
+    },
+    "invalidPassword": {
+      "title": "密码无效",
+      "description": "密码至少需要8个字符，且包含至少一个字母和一个数字"
+    },
+    "walletRecovered": {
+      "title": "成功",
+      "description": "钱包恢复成功"
+    },
+    "duplicateWallet": {
+      "title": "重复钱包",
+      "description": "此钱包已添加"
+    },
+    "recoveryError": {
+      "title": "错误",
+      "description": "恢复钱包时发生错误"
+    }
+  }
+} 
