@@ -1,4 +1,5 @@
 import {
+  addToast,
   Button,
   Chip,
   Pagination,
@@ -13,23 +14,13 @@ import {
 import { useRequest } from 'ahooks'
 import React, { useCallback, useMemo } from 'react'
 import { HiOutlineCurrencyDollar } from 'react-icons/hi'
-import { LuClock } from 'react-icons/lu'
+import { LuClock, LuCopy } from 'react-icons/lu'
 import { RiMoneyPoundCircleLine } from 'react-icons/ri'
 import { TbHash } from 'react-icons/tb'
 import { useParams } from 'react-router'
+import { useTranslation } from 'react-i18next'
 import type { Wallet } from '../../types'
 import { Transaction } from '../data'
-
-export const columns = [
-  { name: 'HASH', uid: 'hash', icon: <TbHash size={20} /> },
-  { name: 'TIMESTAMP', uid: 'timestamp', icon: <LuClock size={20} /> },
-  { name: 'AMOUNT', uid: 'amount', icon: <RiMoneyPoundCircleLine size={20} /> },
-  { name: 'FEE', uid: 'fee', icon: <HiOutlineCurrencyDollar size={20} /> },
-  { name: 'SENDER', uid: 'sender', icon: <TbHash size={20} /> },
-  { name: 'RECIPIENT', uid: 'recipient', icon: <TbHash size={20} /> },
-]
-
-const PAGE_SIZE = 10
 
 type TransactionsTableProps = {
   filterValue: string
@@ -42,7 +33,20 @@ export const TransactionsTable = ({
   page,
   setPage,
 }: TransactionsTableProps) => {
+  const { t } = useTranslation()
   const { walletId } = useParams<{ walletId: string }>()
+  
+  const columns = [
+    { name: t('walletDetails.tableTitles.hash'), uid: 'hash', icon: <TbHash size={18} /> },
+    { name: t('walletDetails.tableTitles.timestamp'), uid: 'timestamp', icon: <LuClock size={18} /> },
+    { name: t('walletDetails.tableTitles.amount'), uid: 'amount', icon: <RiMoneyPoundCircleLine size={18} /> },
+    { name: t('walletDetails.tableTitles.fee'), uid: 'fee', icon: <HiOutlineCurrencyDollar size={18} /> },
+    { name: t('walletDetails.tableTitles.sender'), uid: 'sender', icon: <TbHash size={18} /> },
+    { name: t('walletDetails.tableTitles.recipient'), uid: 'recipient', icon: <TbHash size={18} /> },
+  ]
+  
+  const PAGE_SIZE = 10
+
   const { data: walletAddress, loading: walletLoading } = useRequest<
     Wallet['address'],
     any
@@ -104,6 +108,15 @@ export const TransactionsTable = ({
   const onPreviousPage = useCallback(() => {
     if (page > 1) setPage(page - 1)
   }, [page])
+  
+  const copyToClipboard = useCallback((text: string) => {
+    navigator.clipboard.writeText(text)
+    addToast({
+      title: t('walletDetails.copied'),
+      color: 'success',
+      timeout: 1500,
+    })
+  }, [t])
 
   const bottomContent = useMemo(() => {
     return (
@@ -113,10 +126,14 @@ export const TransactionsTable = ({
           isCompact
           showControls
           showShadow
-          color="default"
+          color="primary"
           page={page}
           total={pages}
           onChange={setPage}
+          classNames={{
+            cursor: "bg-primary",
+            item: "text-text-primary",
+          }}
         />
         <div className="hidden w-[30%] justify-end gap-2 sm:flex">
           <Button
@@ -124,35 +141,43 @@ export const TransactionsTable = ({
             size="sm"
             variant="flat"
             onPress={onPreviousPage}
+            className="text-text-primary"
           >
-            Previous
+            {t('walletDetails.previous')}
           </Button>
           <Button
             isDisabled={page >= pages}
             size="sm"
             variant="flat"
             onPress={onNextPage}
+            className="text-text-primary"
           >
-            Next
+            {t('walletDetails.next')}
           </Button>
         </div>
       </div>
     )
-  }, [items.length, page, pages, hasSearchFilter])
+  }, [page, pages, onPreviousPage, onNextPage, t])
 
   const renderCell = useCallback(
     (transaction: Transaction, columnKey: React.Key) => {
       switch (columnKey) {
         case 'hash':
           return (
-            <h3 className="text-balance text-sm text-default-500">
-              {transaction.hash}
-            </h3>
+            <div 
+              className="flex items-center gap-2 group cursor-pointer" 
+              onClick={() => copyToClipboard(transaction.hash)}
+            >
+              <h3 className="text-balance text-sm text-text-secondary">
+                {transaction.hash}
+              </h3>
+              <LuCopy size={14} className="text-text-tertiary opacity-0 group-hover:opacity-100 transition-opacity" />
+            </div>
           )
         case 'timestamp':
           return (
-            <p className="text-balance text-center text-sm capitalize text-default-600">
-              {new Date(transaction.timestamp).toLocaleString('en-US', {
+            <p className="text-balance text-sm text-text-secondary">
+              {new Date(transaction.timestamp).toLocaleString(undefined, {
                 year: 'numeric',
                 month: '2-digit',
                 day: '2-digit',
@@ -166,30 +191,56 @@ export const TransactionsTable = ({
           const amountColor =
             transaction.sender === walletAddress ? 'danger' : 'success'
           return (
-            <Chip color={amountColor} size="sm" variant="flat" className="px-4">
+            <Chip 
+              color={amountColor} 
+              size="sm" 
+              variant="flat" 
+              className="px-3 font-medium"
+            >
               {transaction.amount} WART
             </Chip>
           )
         }
         case 'fee':
           return (
-            <Chip color="warning" size="sm" variant="flat" className="px-4">
+            <Chip 
+              color="warning" 
+              size="sm" 
+              variant="flat" 
+              className="px-3 font-medium"
+            >
               {transaction.fee} WART
             </Chip>
           )
         case 'sender':
           return (
-            <p className="text-sm text-default-500">{transaction.sender}</p>
+            <div 
+              className="flex items-center gap-2 group cursor-pointer" 
+              onClick={() => copyToClipboard(transaction.sender)}
+            >
+              <p className="text-sm text-text-secondary truncate max-w-[120px] sm:max-w-[180px]">
+                {transaction.sender}
+              </p>
+              <LuCopy size={14} className="text-text-tertiary opacity-0 group-hover:opacity-100 transition-opacity" />
+            </div>
           )
         case 'recipient':
           return (
-            <p className="text-sm text-default-500">{transaction.recipient}</p>
+            <div 
+              className="flex items-center gap-2 group cursor-pointer" 
+              onClick={() => copyToClipboard(transaction.recipient)}
+            >
+              <p className="text-sm text-text-secondary truncate max-w-[120px] sm:max-w-[180px]">
+                {transaction.recipient}
+              </p>
+              <LuCopy size={14} className="text-text-tertiary opacity-0 group-hover:opacity-100 transition-opacity" />
+            </div>
           )
         default:
           return null
       }
     },
-    [walletAddress],
+    [walletAddress, copyToClipboard],
   )
 
   return (
@@ -197,25 +248,31 @@ export const TransactionsTable = ({
       aria-label="Transactions table"
       bottomContent={bottomContent}
       bottomContentPlacement="outside"
-      classNames={{ wrapper: 'max-h-[calc(100vh-270px)] scroll-sm' }}
+      classNames={{ 
+        wrapper: 'max-h-[calc(100vh-320px)] scroll-sm bg-background dark:bg-background',
+        thead: 'bg-surface-hover dark:bg-surface-hover',
+        th: 'text-text-primary dark:text-text-primary font-medium text-sm py-3',
+        td: 'border-t border-border dark:border-border',
+      }}
+      className="rounded-lg overflow-hidden"
     >
       <TableHeader columns={columns}>
         {(column) => (
-          <TableColumn key={column.uid} align="start" className="py-4">
-            <div className="flex items-center gap-2.5 text-default-600">
+          <TableColumn key={column.uid} align="start">
+            <div className="flex items-center gap-2 text-text-primary">
               {column.icon} {column.name}
             </div>
           </TableColumn>
         )}
       </TableHeader>
       <TableBody
-        emptyContent="No transactions found"
+        emptyContent={t('walletDetails.noTransactions')}
         items={items}
         isLoading={isLoading}
-        loadingContent={<Spinner />}
+        loadingContent={<Spinner color="primary" />}
       >
         {(item) => (
-          <TableRow key={item.hash}>
+          <TableRow key={item.hash} className="hover:bg-surface-hover dark:hover:bg-surface-hover transition-colors">
             {(columnKey) => (
               <TableCell>{renderCell(item, columnKey)}</TableCell>
             )}

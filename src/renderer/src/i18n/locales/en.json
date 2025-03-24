@@ -104,5 +104,43 @@
     "error": "Error",
     "errorMessage": "Something went wrong. Please try again",
     "invalidPasswordError": "The password you entered is incorrect"
+  },
+  "walletDetails": {
+    "title": "Wallet Details",
+    "transactions": "Transactions",
+    "previous": "Previous",
+    "next": "Next",
+    "noTransactions": "No transactions found",
+    "copied": "Copied to clipboard",
+    "loading": "Loading...",
+    "wallet": "Wallet",
+    "walletNotFound": "Wallet Not Found",
+    "balanceWART": "Wallet Balance in WART",
+    "balanceUSD": "Wallet Balance in USD",
+    "searchBySender": "Search by sender...",
+    "logout": "Logout",
+    "makeTransaction": "Make Transaction",
+    "receiveWART": "Receive WART",
+    "transactionSent": "Transaction Sent",
+    "transactionSuccess": "Your transaction has been sent successfully!",
+    "transactionFailed": "Transaction Failed",
+    "transactionError": "Something went wrong while sending the transaction",
+    "amount": "Amount",
+    "networkFee": "Network Fee",
+    "recipient": "Recipient",
+    "sendDescription": "Send WART to other wallets through Wartlock",
+    "receiveDescription": "Receive WART tokens to your wallet",
+    "yourAddress": "Your wallet address",
+    "copy": "Copy Address",
+    "confirm": "Confirm",
+    "addressCopied": "Address copied to clipboard",
+    "tableTitles": {
+      "hash": "HASH",
+      "timestamp": "TIMESTAMP",
+      "amount": "AMOUNT",
+      "fee": "FEE",
+      "sender": "SENDER",
+      "recipient": "RECIPIENT"
+    }
   }
 } 

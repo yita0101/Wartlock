@@ -12,8 +12,10 @@ import {
 import { useEffect, useState } from 'react'
 import { BiDollar } from 'react-icons/bi'
 import { useParams } from 'react-router'
+import { useTranslation } from 'react-i18next'
 
 export const CreateTransactionModal = () => {
+  const { t } = useTranslation()
   const { isOpen, onClose, onOpen } = useDisclosure()
   const { walletId } = useParams<{ walletId: string }>()
 
@@ -47,8 +49,8 @@ export const CreateTransactionModal = () => {
     e.preventDefault()
     if (!walletAddress) {
       addToast({
-        title: 'Error',
-        description: 'Wallet address not found',
+        title: t('toasts.error.title', 'Error'),
+        description: t('toasts.walletNotFound.description', 'Wallet address not found'),
         color: 'danger',
         timeout: 2000,
       })
@@ -73,10 +75,9 @@ export const CreateTransactionModal = () => {
         peerUrl,
       )
 
-
       addToast({
-        title: 'Transaction Sent',
-        description: 'Your transaction has been sent successfully!',
+        title: t('walletDetails.transactionSent', 'Transaction Sent'),
+        description: t('walletDetails.transactionSuccess', 'Your transaction has been sent successfully!'),
         color: 'success',
         timeout: 2000,
       })
@@ -85,8 +86,8 @@ export const CreateTransactionModal = () => {
     } catch (err) {
       console.error('Transaction failed:', err)
       addToast({
-        title: 'Transaction Failed',
-        description: 'Something went wrong while sending the transaction',
+        title: t('walletDetails.transactionFailed', 'Transaction Failed'),
+        description: t('walletDetails.transactionError', 'Something went wrong while sending the transaction'),
         color: 'danger',
         timeout: 2000,
       })
@@ -96,13 +97,13 @@ export const CreateTransactionModal = () => {
   return (
     <>
       <Button
-        color="secondary"
+        color="primary"
         variant="shadow"
-        className="px-6 font-light"
-        startContent={<BiDollar className="text-default-800" size={20} />}
+        className="px-4 py-2 font-medium rounded-md"
+        startContent={<BiDollar className="text-white" size={18} />}
         onPress={onOpen}
       >
-        Make Transaction
+        {t('walletDetails.makeTransaction')}
       </Button>
 
       <Modal
@@ -111,59 +112,90 @@ export const CreateTransactionModal = () => {
         onClose={onClose}
         size="xl"
         hideCloseButton
-        classNames={{ wrapper: 'overflow-hidden' }}
-        className="bg-default-100"
+        classNames={{ 
+          wrapper: 'overflow-hidden',
+          base: "rounded-lg border border-border dark:border-border shadow-lg"
+        }}
+        className="bg-background dark:bg-background"
       >
         <ModalContent>
-          <div className="space-y-12 px-12 py-12">
-            <ModalHeader className="block space-y-6 text-center">
-              <h3 className="text-[28px]">Make a Transaction</h3>
-              <p className="text-lg font-normal text-default-400">
-                Send WART to other wallets through Wartlock
+          <div className="space-y-8 px-8 py-8">
+            <ModalHeader className="block space-y-4 text-center px-0">
+              <h3 className="text-2xl font-medium text-text-primary dark:text-text-primary">
+                {t('walletDetails.makeTransaction')}
+              </h3>
+              <p className="text-base font-normal text-text-tertiary dark:text-text-tertiary">
+                {t('walletDetails.sendDescription', 'Send WART to other wallets through Wartlock')}
               </p>
             </ModalHeader>
             <ModalBody>
-              <Form onSubmit={onSubmit} className="space-y-10">
+              <Form onSubmit={onSubmit} className="space-y-6">
                 <Input
                   name="amount"
                   type="number"
                   labelPlacement="outside"
-                  label="Amount"
+                  label={t('walletDetails.amount', 'Amount')}
                   isRequired
                   size="lg"
                   autoFocus
-                  variant="faded"
+                  variant="bordered"
                   value={amount}
                   onChange={(e) => setAmount(e.target.value)}
-                  classNames={{ inputWrapper: 'bg-default-200' }}
+                  className="bg-surface dark:bg-surface"
+                  classNames={{ 
+                    input: "text-text-primary dark:text-text-primary",
+                    label: "text-text-secondary dark:text-text-secondary font-medium"
+                  }}
                 />
                 <Input
                   name="networkFee"
                   type="number"
                   labelPlacement="outside"
-                  label="Network Fee"
+                  label={t('walletDetails.networkFee', 'Network Fee')}
                   isRequired
                   size="lg"
-                  variant="faded"
+                  variant="bordered"
                   value={networkFee}
                   onChange={(e) => setNetworkFee(e.target.value)}
-                  classNames={{ inputWrapper: 'bg-default-200' }}
+                  className="bg-surface dark:bg-surface"
+                  classNames={{ 
+                    input: "text-text-primary dark:text-text-primary",
+                    label: "text-text-secondary dark:text-text-secondary font-medium"
+                  }}
                 />
                 <Input
                   name="recipient"
                   type="text"
                   labelPlacement="outside"
-                  label="Recipient"
+                  label={t('walletDetails.recipient', 'Recipient')}
                   isRequired
                   size="lg"
-                  variant="faded"
+                  variant="bordered"
                   value={recipient}
                   onChange={(e) => setRecipient(e.target.value)}
-                  classNames={{ inputWrapper: 'bg-default-200' }}
+                  className="bg-surface dark:bg-surface"
+                  classNames={{ 
+                    input: "text-text-primary dark:text-text-primary",
+                    label: "text-text-secondary dark:text-text-secondary font-medium"
+                  }}
                 />
-                <Button color="default" type="submit" fullWidth radius="sm">
-                  Make Transaction
-                </Button>
+                <div className="flex gap-4 pt-4">
+                  <Button 
+                    color="danger" 
+                    variant="flat" 
+                    className="flex-1"
+                    onPress={onClose}
+                  >
+                    {t('passwordModal.cancel')}
+                  </Button>
+                  <Button 
+                    color="primary" 
+                    type="submit" 
+                    className="flex-1"
+                  >
+                    {t('walletDetails.confirm', 'Confirm')}
+                  </Button>
+                </div>
               </Form>
             </ModalBody>
           </div>
