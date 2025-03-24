@@ -10,8 +10,8 @@ const Settings = () => {
     <WalletProvider>
       <div className="flex h-full flex-col">
         <SettingsNavbar />
-        <main>
-          <section className="flex min-h-page items-start justify-center rounded-[20px] bg-surface p-8 shadow-sm">
+        <main className="px-4 pb-8">
+          <section className="flex min-h-page items-start justify-center rounded-xl bg-surface p-8 shadow-xl border-2 border-border">
             <SettingsForm />
           </section>
         </main>

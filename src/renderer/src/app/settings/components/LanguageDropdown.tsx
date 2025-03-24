@@ -22,28 +22,34 @@ export const LanguageDropdown = () => {
 
   return (
     <div className="w-full">
+      <label className="block mb-2 text-md font-bold text-black dark:text-white">
+        {t('settings.language')}
+      </label>
       <Select
-        label={t('settings.language')}
-        labelPlacement="outside"
+        aria-label={t('settings.language')}
+        labelPlacement="outside-left"
         placeholder={t('settings.selectLanguage')}
         selectedKeys={[i18n.language.substring(0, 2)]}
         onChange={(e) => handleSelectionChange(e.target.value)}
-        startContent={<BsGlobe className="text-primary" />}
+        startContent={<BsGlobe className="text-primary" size={20} />}
         size="lg"
         variant="bordered"
         className="max-w-full"
         classNames={{
-          trigger: 'bg-surface-hover border-border',
-          listbox: 'bg-surface border-border'
+          trigger: 'bg-surface-hover border-2 border-border',
+          listbox: 'bg-surface border-2 border-border',
+          value: 'text-black dark:text-white font-medium',
+          base: 'text-black dark:text-white',
+          innerWrapper: 'font-medium'
         }}
       >
         {languages.map((lang) => (
           <SelectItem 
             key={lang.key} 
             textValue={lang.name}
-            className="text-text-primary"
+            className="text-black dark:text-white font-medium"
           >
-            {lang.name}
+            <span className="text-black dark:text-white font-medium">{lang.name}</span>
           </SelectItem>
         ))}
       </Select>

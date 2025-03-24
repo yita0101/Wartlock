@@ -5,12 +5,12 @@
     --primary-hover: #f38d68; /* coral - 主色调的悬停状态 */
     --secondary: #9fb8ad; /* ash-gray - 次要色调，用于次要元素 */
     --background: #ffffff; /* 纯白色背景 */
-    --surface: #f5f5f5; /* 浅灰色表面 */
-    --surface-hover: #eaeaea; /* 表面悬停状态 */
-    --border: #e0e0e0; /* 边框颜色 */
-    --text-primary: #2d2d2d; /* 主要文本颜色 */
-    --text-secondary: #4f4f4f; /* 次要文本颜色 */
-    --text-tertiary: #767676; /* 三级文本颜色 */
+    --surface: #f8f8f8; /* 浅灰色表面 */
+    --surface-hover: #e0e0e0; /* 表面悬停状态 */
+    --border: #b0b0b0; /* 边框颜色，大幅加深 */
+    --text-primary: #000000; /* 主要文本颜色，改成纯黑 */
+    --text-secondary: #444444; /* 次要文本颜色，大幅加深以保持可读性 */
+    --text-tertiary: #666666; /* 三级文本颜色，加深 */
     --accent: #475841; /* feldgrau - 强调色 */
   }
 

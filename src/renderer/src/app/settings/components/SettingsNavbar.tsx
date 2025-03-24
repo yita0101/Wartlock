@@ -12,9 +12,9 @@ export const SettingsNavbar = () => {
   const { t } = useTranslation()
   
   return (
-    <NavbarComponent maxWidth="full" className="bg-transparent py-6">
+    <NavbarComponent maxWidth="full" className="bg-transparent py-6 px-4">
       <NavbarBrand>
-        <h2 className="text-2xl font-bold text-text-primary">{t('settings.title')}</h2>
+        <h2 className="text-3xl font-bold text-black dark:text-white">{t('settings.title')}</h2>
       </NavbarBrand>
 
       {/* <NavbarContent justify="end">
