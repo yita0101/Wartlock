@@ -1,6 +1,5 @@
 import {
   Button,
-  Pagination,
   Tooltip,
   addToast,
 } from '@heroui/react'

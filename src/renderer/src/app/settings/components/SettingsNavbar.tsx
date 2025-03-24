@@ -1,18 +1,14 @@
 import {
   NavbarBrand,
-  Navbar as NavbarComponent,
-  NavbarContent,
-  NavbarItem,
+  Navbar
 } from '@heroui/react'
 import { useTranslation } from 'react-i18next'
-import { CreateWalletModal } from '../../components/CreateWalletModal'
-import { RecoverWalletModal } from '../../components/RecoverWalletModal'
 
 export const SettingsNavbar = () => {
   const { t } = useTranslation()
   
   return (
-    <NavbarComponent maxWidth="full" className="bg-transparent py-6 px-4">
+    <Navbar maxWidth="full" className="bg-transparent py-6 px-4">
       <NavbarBrand>
         <h2 className="text-3xl font-bold text-black dark:text-white">{t('settings.title')}</h2>
       </NavbarBrand>
@@ -25,6 +21,6 @@ export const SettingsNavbar = () => {
           <CreateWalletModal />
         </NavbarItem>
       </NavbarContent> */}
-    </NavbarComponent>
+    </Navbar>
   )
 }

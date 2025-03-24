@@ -1,11 +1,8 @@
-import { useTranslation } from 'react-i18next'
 import { WalletProvider } from '../wallets/WalletContext'
 import { SettingsForm } from './components/SettingsForm'
 import { SettingsNavbar } from './components/SettingsNavbar'
 
 const Settings = () => {
-  const { t } = useTranslation()
-
   return (
     <WalletProvider>
       <div className="flex h-full flex-col">

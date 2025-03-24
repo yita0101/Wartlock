@@ -19,8 +19,7 @@ export const CreateTransactionModal = () => {
   const { isOpen, onClose, onOpen } = useDisclosure()
   const { walletId } = useParams<{ walletId: string }>()
 
-  const [amount, setAmount] = useState('0.00000001')
-  const [developerFee, setDeveloperFee] = useState('0.00000001')
+  const [amount, setAmount] = useState('')
   const [networkFee, setNetworkFee] = useState('0.00000001')
   const [recipient, setRecipient] = useState('')
   const [walletAddress, setWalletAddress] = useState<string | null>(null)
@@ -39,11 +38,6 @@ export const CreateTransactionModal = () => {
     }
     fetchWalletAddress()
   }, [walletId])
-
-  useEffect(() => {
-    const calculatedDevFee = (parseFloat(amount) * 0.05).toFixed(8)
-    setDeveloperFee(calculatedDevFee)
-  }, [amount])
 
   const onSubmit = async (e: React.FormEvent<HTMLFormElement>) => {
     e.preventDefault()

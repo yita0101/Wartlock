@@ -20,7 +20,6 @@ import { LanguageDropdown } from './LanguageDropdown'
 export const SettingsForm = () => {
   const { t } = useTranslation()
   const { theme, toggleTheme } = useTheme()
-  const [peerValue, setPeerValue] = useState('')
   const [inputValue, setInputValue] = useState('')
   const navigate = useNavigate()
 
@@ -30,7 +29,6 @@ export const SettingsForm = () => {
     const fetchPeer = async () => {
       const fetchedPeer = await window.dbAPI.getPeer()
       if (isMounted) {
-        setPeerValue(fetchedPeer)
         setInputValue(fetchedPeer)
       }
     }
