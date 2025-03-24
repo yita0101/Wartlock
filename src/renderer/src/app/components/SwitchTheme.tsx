@@ -13,8 +13,7 @@ export const SwitchTheme = () => {
         onPress={toggleTheme}
         variant="light"
         className={cn(
-          'hidden w-full min-w-6 items-center justify-start gap-8 text-default-400 hover:text-default-600 dark:flex',
-          theme === 'dark' ? 'flex' : 'hidden',
+          'w-full min-w-6 items-center justify-start gap-8 text-default-400 hover:text-default-600',
         )}
       >
         {theme === 'dark' ? (
@@ -25,7 +24,7 @@ export const SwitchTheme = () => {
         <motion.span
           initial={{ opacity: 0 }}
           animate={{ opacity: 1 }}
-          className="hidden whitespace-pre font-medium group-hover/sidebar:inline"
+          className="whitespace-pre font-medium group-hover/sidebar:inline"
         >
           {theme === 'dark' ? 'Dark Mode' : 'Light Mode'}
         </motion.span>
