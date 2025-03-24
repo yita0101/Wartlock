@@ -7,7 +7,8 @@
     "confirmPassword": "确认密码",
     "mnemonic": "助记词",
     "continue": "继续",
-    "warning": "警告: 丢失这些单词，就会丢失您的钱包。请安全保存!"
+    "warning": "警告: 丢失这些单词，就会丢失您的钱包。请安全保存!",
+    "copied": "已复制!"
   },
   "createWallet": {
     "title": "创建钱包",
@@ -48,6 +49,10 @@
     "preferences": "偏好设置",
     "saved": "设置保存成功",
     "peer": "公共全节点"
+  },
+  "wallets": {
+    "noWallets": "未找到钱包。创建或恢复钱包以开始使用。",
+    "addressCopied": "钱包地址已复制到剪贴板"
   },
   "toasts": {
     "passwordMismatch": {

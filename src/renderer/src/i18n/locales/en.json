@@ -7,7 +7,8 @@
     "confirmPassword": "Confirm Password",
     "mnemonic": "Mnemonic",
     "continue": "Continue",
-    "warning": "Warning: Lose these words, lose your wallet. Store them safely!"
+    "warning": "Warning: Lose these words, lose your wallet. Store them safely!",
+    "copied": "Copied!"
   },
   "createWallet": {
     "title": "Create Wallet",
@@ -48,6 +49,10 @@
     "preferences": "Preferences",
     "saved": "Settings saved successfully",
     "peer": "Public Full Node"
+  },
+  "wallets": {
+    "noWallets": "No wallets found. Create or recover a wallet to get started.",
+    "addressCopied": "Wallet address copied to clipboard"
   },
   "toasts": {
     "passwordMismatch": {
