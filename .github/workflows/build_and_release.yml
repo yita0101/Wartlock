@@ -33,4 +33,4 @@ jobs:
           ./build/wartlock.AppImage
           ./build/wartlock.exe
           ./build/win-portable.zip
-          ./build/linux-portable.zip
+          
