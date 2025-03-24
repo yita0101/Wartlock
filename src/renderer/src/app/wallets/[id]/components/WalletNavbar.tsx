@@ -181,7 +181,7 @@ export const WalletNavbar = ({
           onClear={onClear}
           onValueChange={onSearchChange}
           classNames={{
-            inputWrapper: "bg-background dark:bg-background border border-border dark:border-border shadow-sm focus-within:ring-1 focus-within:ring-primary",
+            inputWrapper: "bg-background dark:bg-background border border-border dark:border-border shadow-sm focus-within:ring-1 focus-within:ring-primary hover:bg-blue-800 dark:hover:border-primary",
             input: "text-text-primary dark:text-text-primary"
           }}
         />

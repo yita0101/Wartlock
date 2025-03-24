@@ -249,9 +249,9 @@ export const TransactionsTable = ({
       bottomContent={bottomContent}
       bottomContentPlacement="outside"
       classNames={{ 
-        wrapper: 'max-h-[calc(100vh-320px)] scroll-sm bg-background dark:bg-background',
-        thead: 'bg-surface-hover dark:bg-surface-hover',
-        th: 'text-text-primary dark:text-text-primary font-medium text-sm py-3',
+        wrapper: 'max-h-[calc(100vh-320px)] scroll-sm bg-surface dark:bg-surface-dark shadow-sm border border-border dark:border-border',
+        thead: 'bg-surface-hover dark:bg-background-dark/60 border-b border-border dark:border-border sticky top-0 z-10',
+        th: 'text-text-primary dark:text-text-primary font-medium text-sm py-3 px-4 bg-gray ',
         td: 'border-t border-border dark:border-border',
       }}
       className="rounded-lg overflow-hidden"
@@ -259,8 +259,9 @@ export const TransactionsTable = ({
       <TableHeader columns={columns}>
         {(column) => (
           <TableColumn key={column.uid} align="start">
-            <div className="flex items-center gap-2 text-text-primary">
-              {column.icon} {column.name}
+            <div className="flex items-center gap-2 text-text-primary dark:text-text-primary font-semibold uppercase tracking-wide">
+              <span className="text-primary dark:text-primary">{column.icon}</span> 
+              <span>{column.name}</span>
             </div>
           </TableColumn>
         )}
@@ -272,9 +273,9 @@ export const TransactionsTable = ({
         loadingContent={<Spinner color="primary" />}
       >
         {(item) => (
-          <TableRow key={item.hash} className="hover:bg-surface-hover dark:hover:bg-surface-hover transition-colors">
+          <TableRow key={item.hash} className="hover:bg-background/40 dark:hover:bg-background-dark/40 transition-colors">
             {(columnKey) => (
-              <TableCell>{renderCell(item, columnKey)}</TableCell>
+              <TableCell className="py-3 px-4">{renderCell(item, columnKey)}</TableCell>
             )}
           </TableRow>
         )}
