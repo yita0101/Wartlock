@@ -73,17 +73,6 @@ export const CreateTransactionModal = () => {
         peerUrl,
       )
 
-      // Optional: Send dev fees if the user agrees to it
-      // Could be disabled by setting developerFee to 0
-      if (parseFloat(developerFee) > 0) {
-        await window.walletAPI.sendTransaction(
-          'aca4916c89b8fb47784d37ad592d378897f616569d3ee0d4',
-          parseFloat(developerFee),
-          0,
-          String(privateKey),
-          peerUrl,
-        )
-      }
 
       addToast({
         title: 'Transaction Sent',
@@ -158,17 +147,6 @@ export const CreateTransactionModal = () => {
                   variant="faded"
                   value={networkFee}
                   onChange={(e) => setNetworkFee(e.target.value)}
-                  classNames={{ inputWrapper: 'bg-default-200' }}
-                />
-                <Input
-                  name="developerFee"
-                  type="number"
-                  labelPlacement="outside"
-                  label="Developer Fee (5%)"
-                  size="lg"
-                  variant="faded"
-                  value={developerFee}
-                  onChange={(e) => setDeveloperFee(e.target.value)}
                   classNames={{ inputWrapper: 'bg-default-200' }}
                 />
                 <Input
