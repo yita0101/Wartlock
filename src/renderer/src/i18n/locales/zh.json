@@ -91,5 +91,18 @@
       "title": "错误",
       "description": "恢复钱包时发生错误"
     }
+  },
+  "passwordModal": {
+    "title": "输入钱包密码",
+    "passwordPlaceholder": "请输入您的密码",
+    "invalidPassword": "请输入有效的密码",
+    "viewDetails": "查看钱包详情",
+    "cancel": "取消",
+    "confirm": "确认",
+    "success": "成功",
+    "successMessage": "您已成功登录您的钱包",
+    "error": "错误",
+    "errorMessage": "出现错误，请重试",
+    "invalidPasswordError": "您输入的密码不正确"
   }
 } 

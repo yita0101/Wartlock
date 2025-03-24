@@ -91,5 +91,18 @@
       "title": "Error",
       "description": "An error occurred while recovering wallet"
     }
+  },
+  "passwordModal": {
+    "title": "Enter Wallet Password",
+    "passwordPlaceholder": "Enter your password",
+    "invalidPassword": "Please enter a valid password",
+    "viewDetails": "View Wallet Details",
+    "cancel": "Cancel",
+    "confirm": "Confirm",
+    "success": "Success",
+    "successMessage": "You successfully logged in into your wallet",
+    "error": "Error",
+    "errorMessage": "Something went wrong. Please try again",
+    "invalidPasswordError": "The password you entered is incorrect"
   }
 } 
