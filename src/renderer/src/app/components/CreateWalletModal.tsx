@@ -106,14 +106,10 @@ export const CreateWalletModal = () => {
     <>
       <Button
         onPress={onOpen}
-        className="px-7"
+        className="bg-primary hover:bg-primary-hover text-white rounded-lg px-6 py-2 transition-all duration-300 flex items-center gap-2"
         startContent={<GoPlus size={20} />}
-        style={{
-          backgroundImage:
-            'linear-gradient(176.63deg, #725DFD -33.88%, #3E3384 111.03%)',
-        }}
       >
-        Create Wallet
+        创建钱包
       </Button>
 
       <Modal
@@ -121,14 +117,14 @@ export const CreateWalletModal = () => {
         isOpen={isOpen}
         onClose={onClose}
         size="xl"
-        className="bg-default-100"
+        className="bg-surface"
       >
         <ModalContent>
           <div className="space-y-12 px-12 py-12">
             <ModalHeader className="block space-y-6 text-center">
-              <h3 className="text-[28px]">Create Wallet</h3>
-              <p className="text-lg font-normal text-default-400">
-                Create a new wallet to manage your WART tokens
+              <h3 className="text-[28px] text-text-primary">创建钱包</h3>
+              <p className="text-lg font-normal text-text-tertiary">
+                创建一个新钱包来管理您的WART代币
               </p>
             </ModalHeader>
 
@@ -141,51 +137,51 @@ export const CreateWalletModal = () => {
                 >
                   <Input
                     name="name"
-                    label="Wallet Name"
+                    label="钱包名称"
                     labelPlacement="outside"
                     isRequired
                     size="lg"
                     autoFocus
                     variant="faded"
-                    classNames={{ inputWrapper: 'bg-default-200' }}
+                    classNames={{ inputWrapper: 'bg-surface-hover' }}
                   />
                   <PasswordInput
                     name="password"
-                    label="Password"
+                    label="密码"
                     labelPlacement="outside"
                     isRequired
                     size="lg"
                     validate={(value) =>
                       !WALLET_PASSWORD_REGEX.test(value)
-                        ? 'Invalid password format'
+                        ? '密码格式无效'
                         : undefined
                     }
                     variant="faded"
-                    classNames={{ inputWrapper: 'bg-default-200' }}
+                    classNames={{ inputWrapper: 'bg-surface-hover' }}
                   />
                   <PasswordInput
                     name="passwordConfirm"
-                    label="Confirm Password"
+                    label="确认密码"
                     labelPlacement="outside"
                     isRequired
                     size="lg"
                     variant="faded"
-                    classNames={{ inputWrapper: 'bg-default-200' }}
+                    classNames={{ inputWrapper: 'bg-surface-hover' }}
                   />
                 </Form>
               </ModalBody>
             ) : (
               <ModalBody>
-                <p className="text-center font-bold">
-                  Store your mnemonic safely:
+                <p className="text-center font-bold text-text-primary">
+                  请安全保管您的助记词:
                 </p>
                 <div className="flex items-center gap-3">
-                  <Code className="w-[500px] text-wrap break-words text-base">
+                  <Code className="w-[500px] text-wrap break-words text-base bg-surface-hover border-border">
                     {showMnemonic ? mnemonic : mnemonic.replaceAll(/\w/g, '*')}
                   </Code>
                   <div className="flex flex-col items-center gap-2">
                     <Button
-                      color="default"
+                      className="text-text-primary"
                       size="sm"
                       variant="light"
                       isIconOnly
@@ -194,7 +190,7 @@ export const CreateWalletModal = () => {
                       <MdOutlineContentCopy size={20} />
                     </Button>
                     <Button
-                      color="default"
+                      className="text-text-primary"
                       size="sm"
                       variant="light"
                       isIconOnly
@@ -208,9 +204,8 @@ export const CreateWalletModal = () => {
                     </Button>
                   </div>
                 </div>
-                <p className="text-sm font-bold text-warning">
-                  Warning: Lose these words, lose your wallet. Store them
-                  safely!
+                <p className="text-sm font-bold text-primary">
+                  警告: 丢失这些单词，就会丢失您的钱包。请安全保存!
                 </p>
               </ModalBody>
             )}
@@ -218,21 +213,21 @@ export const CreateWalletModal = () => {
             <ModalFooter>
               {!mnemonic ? (
                 <Button
-                  color="secondary"
+                  className="bg-primary hover:bg-primary-hover text-white"
                   type="submit"
                   form="create-wallet-modal"
                   fullWidth
                   radius="sm"
                 >
-                  Create Wallet
+                  创建钱包
                 </Button>
               ) : (
                 <Button
-                  color="default"
+                  className="bg-accent hover:bg-opacity-80 text-white"
                   fullWidth
                   onPress={finalizeWalletCreation}
                 >
-                  Continue
+                  继续
                 </Button>
               )}
             </ModalFooter>

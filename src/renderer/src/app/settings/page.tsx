@@ -5,12 +5,14 @@ import { SettingsNavbar } from './components/SettingsNavbar'
 const Settings = () => {
   return (
     <WalletProvider>
-      <main>
+      <div>
         <SettingsNavbar />
-        <section className="flex h-page items-center justify-center rounded-[20px] bg-default-100 p-5">
-          <SettingsForm />
-        </section>
-      </main>
+        <main>
+          <section className="flex h-page items-center justify-center rounded-[20px] bg-surface p-5">
+            <SettingsForm />
+          </section>
+        </main>
+      </div>
     </WalletProvider>
   )
 }

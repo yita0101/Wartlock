@@ -23,6 +23,25 @@ export default {
           '2xl': '8rem',
         },
       },
+      colors: {
+        primary: {
+          DEFAULT: 'var(--primary)',
+          hover: 'var(--primary-hover)',
+        },
+        secondary: 'var(--secondary)',
+        background: 'var(--background)',
+        surface: {
+          DEFAULT: 'var(--surface)',
+          hover: 'var(--surface-hover)',
+        },
+        border: 'var(--border)',
+        text: {
+          primary: 'var(--text-primary)',
+          secondary: 'var(--text-secondary)',
+          tertiary: 'var(--text-tertiary)',
+        },
+        accent: 'var(--accent)',
+      },
     },
   },
 

@@ -13,20 +13,20 @@ export const SwitchTheme = () => {
         onPress={toggleTheme}
         variant="light"
         className={cn(
-          'w-full min-w-6 items-center justify-start gap-8 text-default-400 hover:text-default-600',
+          'w-full min-w-6 items-center justify-start gap-3 rounded-lg bg-surface p-2 text-text-primary transition-all duration-300 hover:bg-surface-hover',
         )}
       >
         {theme === 'dark' ? (
-          <BsMoon size={20} className="text-white" />
+          <BsMoon size={20} className="text-primary" />
         ) : (
-          <FiSun size={20} className="text-default-600" />
+          <FiSun size={20} className="text-primary" />
         )}
         <motion.span
           initial={{ opacity: 0 }}
           animate={{ opacity: 1 }}
           className="whitespace-pre font-medium group-hover/sidebar:inline"
         >
-          {theme === 'dark' ? 'Dark Mode' : 'Light Mode'}
+          {theme === 'dark' ? '暗色模式' : '亮色模式'}
         </motion.span>
       </Button>
     </div>

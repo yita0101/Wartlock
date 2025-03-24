@@ -12,6 +12,7 @@ import {
 } from '@heroui/react'
 import { PasswordInput } from '@renderer/components/PasswordInput'
 import { useState } from 'react'
+import { MdOutlineRestoreFromTrash } from 'react-icons/md'
 import { useWallet } from '../wallets/WalletContext'
 
 const WALLET_PASSWORD_REGEX = /^(?=.*[A-Za-z])(?=.*\d)[A-Za-z\d]{8,}/
@@ -97,8 +98,12 @@ export const RecoverWalletModal = () => {
 
   return (
     <>
-      <Button onPress={onOpen} className="bg-[#27292B] px-9">
-        Recover Wallet
+      <Button 
+        onPress={onOpen} 
+        className="bg-secondary hover:bg-opacity-80 text-text-primary rounded-lg px-6 py-2 transition-all duration-300 flex items-center gap-2"
+        startContent={<MdOutlineRestoreFromTrash size={20} />}
+      >
+        恢复钱包
       </Button>
 
       <Modal
@@ -108,14 +113,14 @@ export const RecoverWalletModal = () => {
         size="xl"
         hideCloseButton
         classNames={{ wrapper: 'overflow-hidden' }}
-        className="bg-default-100"
+        className="bg-surface"
       >
         <ModalContent>
           <div className="space-y-12 px-12 py-12">
             <ModalHeader className="block space-y-6 text-center">
-              <h3 className="text-[28px]">Recover Wallet</h3>
-              <p className="text-lg font-normal text-default-400">
-                Recover a wallet to manage your WART tokens
+              <h3 className="text-[28px] text-text-primary">恢复钱包</h3>
+              <p className="text-lg font-normal text-text-tertiary">
+                恢复一个钱包来管理您的WART代币
               </p>
             </ModalHeader>
 
@@ -135,53 +140,53 @@ export const RecoverWalletModal = () => {
                   size="lg"
                   autoFocus
                   variant="faded"
-                  classNames={{ inputWrapper: 'bg-default-200' }}
+                  classNames={{ inputWrapper: 'bg-surface-hover' }}
                 />
                 <Input
                   name="mnemonic"
                   type="text"
-                  errorMessage="Please enter a valid mnemonic"
+                  errorMessage="请输入有效的助记词"
                   labelPlacement="outside"
-                  label="Mnemonic"
+                  label="助记词"
                   isRequired
                   size="lg"
                   variant="faded"
-                  classNames={{ inputWrapper: 'bg-default-200' }}
+                  classNames={{ inputWrapper: 'bg-surface-hover' }}
                 />
                 <PasswordInput
                   name="password"
-                  errorMessage="Please enter a valid password"
+                  errorMessage="请输入有效的密码"
                   labelPlacement="outside"
-                  label="Password"
+                  label="密码"
                   isRequired
                   size="lg"
                   variant="faded"
-                  classNames={{ inputWrapper: 'bg-default-200' }}
+                  classNames={{ inputWrapper: 'bg-surface-hover' }}
                   onValueChange={setPassword}
                   validate={validatePassword}
                 />
                 <PasswordInput
                   name="confirmPassword"
                   labelPlacement="outside"
-                  label="Confirm Password"
+                  label="确认密码"
                   isRequired
                   size="lg"
                   validate={validateConfirmPassword}
                   variant="faded"
-                  classNames={{ inputWrapper: 'bg-default-200' }}
+                  classNames={{ inputWrapper: 'bg-surface-hover' }}
                 />
               </Form>
             </ModalBody>
 
             <ModalFooter>
               <Button
-                color="secondary"
+                className="bg-primary hover:bg-primary-hover text-white"
                 type="submit"
                 form="recover-wallet-modal"
                 fullWidth
                 radius="sm"
               >
-                Recover Wallet
+                恢复钱包
               </Button>
             </ModalFooter>
           </div>

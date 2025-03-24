@@ -6,11 +6,23 @@
     <!-- https://developer.mozilla.org/en-US/docs/Web/HTTP/CSP -->
     <meta
       http-equiv="Content-Security-Policy"
-      content="default-src 'self'; script-src 'self'; style-src 'self' 'unsafe-inline'; img-src 'self' data:"
+      content="default-src 'self'; script-src 'self' 'unsafe-inline'; style-src 'self' 'unsafe-inline'; img-src 'self' data:"
     />
+    <script>
+      // 从localStorage中获取主题或使用系统偏好设置
+      (function() {
+        const savedTheme = localStorage.getItem('theme');
+        const prefersDarkTheme = window.matchMedia('(prefers-color-scheme: dark)').matches;
+        const initialTheme = savedTheme || (prefersDarkTheme ? 'dark' : 'light');
+        
+        // 应用主题到HTML元素
+        document.documentElement.classList.add(initialTheme);
+        localStorage.setItem('theme', initialTheme);
+      })();
+    </script>
   </head>
 
-  <body class="dark">
+  <body>
     <div id="root"></div>
     <script type="module" src="/src/main.tsx"></script>
   </body>

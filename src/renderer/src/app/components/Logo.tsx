@@ -13,7 +13,7 @@ export const Logo = () => {
         className="h-5 w-6"
         draggable={false}
       />
-      <span className="hidden text-2xl font-medium group-hover/sidebar:inline-block">
+      <span className="hidden text-2xl font-medium text-text-primary group-hover/sidebar:inline-block">
         Wartlock
       </span>
     </div>
@@ -24,9 +24,9 @@ export const LogoIcon = () => {
   return (
     <Link
       to="/"
-      className="relative z-20 flex items-center space-x-2 py-1 text-sm font-normal text-black"
+      className="relative z-20 flex items-center space-x-2 py-1 text-sm font-normal text-text-primary"
     >
-      <div className="h-5 w-6 shrink-0 rounded-bl-sm rounded-br-lg rounded-tl-lg rounded-tr-sm bg-black dark:bg-white" />
+      <div className="h-5 w-6 shrink-0 rounded-bl-sm rounded-br-lg rounded-tl-lg rounded-tr-sm bg-primary dark:bg-accent" />
     </Link>
   )
 }

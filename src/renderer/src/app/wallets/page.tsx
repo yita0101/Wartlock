@@ -7,7 +7,7 @@ const Wallets = () => {
     <WalletProvider>
       <main>
         <WalletsNavbar />
-        <section className="h-page rounded-[20px] bg-default-100 p-5">
+        <section className="h-page rounded-[20px] bg-surface p-5">
           <WalletsTable />
         </section>
       </main>

@@ -1,10 +1,11 @@
+@import './theme.css';
 @tailwind base;
 @tailwind components;
 @tailwind utilities;
 
 @layer base {
   body {
-    @apply select-none overflow-x-hidden;
+    @apply select-none overflow-x-hidden bg-background text-text-primary transition-colors duration-300;
   }
 
   ::-webkit-scrollbar {
@@ -12,11 +13,11 @@
   }
 
   ::-webkit-scrollbar-thumb {
-    @apply cursor-grab rounded-[10px] bg-default-400;
+    @apply cursor-grab rounded-[10px] bg-surface-hover;
   }
 
   ::-webkit-scrollbar-thumb:hover {
-    @apply bg-default-500;
+    @apply bg-border;
   }
 }
 
@@ -26,10 +27,10 @@
   }
 
   .scroll-sm::-webkit-scrollbar-thumb {
-    @apply cursor-grab rounded-[10px] bg-default-400;
+    @apply cursor-grab rounded-[10px] bg-surface-hover;
   }
 
   .scroll-sm::-webkit-scrollbar-thumb:hover {
-    @apply bg-default-500;
+    @apply bg-border;
   }
 }

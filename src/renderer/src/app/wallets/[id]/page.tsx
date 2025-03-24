@@ -13,7 +13,7 @@ const Wallet = () => {
         setFilterValue={setFilterValue}
         setPage={setPage}
       />
-      <section className="h-page rounded-[20px] bg-default-100 p-5">
+      <section className="h-page rounded-[20px] bg-surface p-5">
         <TransactionsTable
           filterValue={filterValue}
           page={page}

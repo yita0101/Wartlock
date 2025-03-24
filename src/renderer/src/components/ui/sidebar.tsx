@@ -91,7 +91,7 @@ export const DesktopSidebar = ({
     <>
       <motion.div
         className={cn(
-          'group/sidebar hidden h-full w-[90px] shrink-0 bg-default-100 px-4 py-4 md:flex md:flex-col',
+          'group/sidebar hidden h-full w-[90px] shrink-0 bg-surface px-4 py-4 md:flex md:flex-col',
           className,
         )}
         animate={{
@@ -123,7 +123,7 @@ export const MobileSidebar = ({
         {...props}
       >
         <button className="z-20 flex w-full cursor-pointer justify-end">
-          <LuMenu className="" onClick={() => setOpen(!open)} />
+          <LuMenu className="text-text-primary" onClick={() => setOpen(!open)} />
         </button>
         <AnimatePresence>
           {open && (
@@ -136,12 +136,12 @@ export const MobileSidebar = ({
                 ease: 'easeInOut',
               }}
               className={cn(
-                'fixed inset-0 z-[100] flex h-full w-full flex-col justify-between p-10',
+                'fixed inset-0 z-[100] flex h-full w-full flex-col justify-between bg-surface p-10',
                 className,
               )}
             >
               <button
-                className="absolute right-10 top-10 z-50 cursor-pointer text-neutral-800 dark:text-neutral-200"
+                className="absolute right-10 top-10 z-50 cursor-pointer text-text-primary"
                 onClick={() => setOpen(!open)}
               >
                 <LuX />
@@ -169,8 +169,8 @@ export const SidebarLink = ({
       to={link.href}
       className={({ isActive }) =>
         cn(
-          'flex items-center justify-start gap-2 py-2 hover:bg-default-200',
-          isActive ? 'bg-default-200' : 'opacity-50',
+          'flex items-center justify-start gap-2 py-2 hover:bg-surface-hover',
+          isActive ? 'bg-surface-hover' : 'opacity-50',
           className,
         )
       }
@@ -183,7 +183,7 @@ export const SidebarLink = ({
           opacity: animate ? (open ? 1 : 0) : 1,
         }}
         transition={{ duration: 0, delay: 0 }}
-        className="inline-block whitespace-pre text-sm"
+        className="inline-block whitespace-pre text-sm text-text-primary"
       >
         {link.label}
       </motion.span>

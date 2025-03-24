@@ -17,13 +17,13 @@ const links = [
   {
     label: 'Wallet Management',
     href: '/',
-    icon: <GoHomeFill className="text-default-600" size={24} />,
+    icon: <GoHomeFill className="text-text-secondary" size={24} />,
   },
 
   {
     label: 'Settings',
     href: '/settings',
-    icon: <FiSettings className="text-default-600" size={24} />,
+    icon: <FiSettings className="text-text-secondary" size={24} />,
   },
 ]
 
@@ -46,9 +46,9 @@ export const SidebarLayout = ({ children }: { children: React.ReactNode }) => {
   )
 
   return (
-    <div className="flex h-screen w-full flex-1 flex-col overflow-hidden bg-default-50 text-foreground md:flex-row">
+    <div className="flex h-screen w-full flex-1 flex-col overflow-hidden bg-background text-text-primary transition-colors duration-300 md:flex-row">
       <Sidebar open={open} setOpen={setOpen}>
-        <SidebarBody className="justify-between gap-10 border-r-2 border-default-50 *:z-20">
+        <SidebarBody className="justify-between gap-10 border-r-2 border-surface *:z-20">
           <Logo />
           <div
             className={cn(
@@ -61,7 +61,7 @@ export const SidebarLayout = ({ children }: { children: React.ReactNode }) => {
                 <SidebarLink
                   key={idx}
                   link={link}
-                  className="flex items-center gap-9 rounded-xl px-4 py-[14.5px] font-light"
+                  className="flex items-center gap-9 rounded-xl px-4 py-[14.5px] font-light hover:bg-surface"
                   onClick={(e) => {
                     if (!privateKey || !wallet || !walletId) return
                     e.preventDefault()

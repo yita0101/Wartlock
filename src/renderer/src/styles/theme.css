@@ -1,0 +1,31 @@
+@layer base {
+  :root {
+    /* 亮色主题（Light Theme）- 默认 */
+    --primary: #ee6c4d; /* burnt-sienna - 主色调，用于强调和行动按钮 */
+    --primary-hover: #f38d68; /* coral - 主色调的悬停状态 */
+    --secondary: #9fb8ad; /* ash-gray - 次要色调，用于次要元素 */
+    --background: #ffffff; /* 纯白色背景 */
+    --surface: #f5f5f5; /* 浅灰色表面 */
+    --surface-hover: #eaeaea; /* 表面悬停状态 */
+    --border: #e0e0e0; /* 边框颜色 */
+    --text-primary: #2d2d2d; /* 主要文本颜色 */
+    --text-secondary: #4f4f4f; /* 次要文本颜色 */
+    --text-tertiary: #767676; /* 三级文本颜色 */
+    --accent: #475841; /* feldgrau - 强调色 */
+  }
+
+  .dark {
+    /* 暗色主题（Dark Theme） */
+    --primary: #ee6c4d; /* burnt-sienna - 保持相同的主色调以便品牌一致性 */
+    --primary-hover: #f38d68; /* coral - 主色调的悬停状态 */
+    --secondary: #475841; /* feldgrau - 在暗色模式中作为次要色调 */
+    --background: #3f403f; /* onyx - 主背景色 */
+    --surface: #4a4b4a; /* 稍微亮一点的背景，用于卡片和组件 */
+    --surface-hover: #555655; /* 表面悬停状态 */
+    --border: #5a5b5a; /* 边框颜色 */
+    --text-primary: #f0f0f0; /* 主要文本颜色 */
+    --text-secondary: #c8c8c8; /* 次要文本颜色 */
+    --text-tertiary: #9f9f9f; /* 三级文本颜色 */
+    --accent: #9fb8ad; /* ash-gray - 作为暗色主题的强调色 */
+  }
+} 
