@@ -10,6 +10,7 @@ import {
   useDisclosure,
 } from '@heroui/react'
 import { GoPlus } from 'react-icons/go'
+import { useTranslation } from 'react-i18next'
 
 type ReceiveWartModalProps = {
   address: string | undefined
@@ -17,13 +18,14 @@ type ReceiveWartModalProps = {
 
 export const ReceiveWartModal = ({ address }: ReceiveWartModalProps) => {
   const { isOpen, onClose, onOpen } = useDisclosure()
+  const { t } = useTranslation()
 
   const handleCopy = async () => {
     if (!address) return
     await navigator.clipboard.writeText(address)
     addToast({
-      title: 'Copied',
-      description: 'Address copied to clipboard',
+      title: t('walletDetails.copied'),
+      description: t('walletDetails.addressCopied'),
       color: 'success',
     })
   }
@@ -37,7 +39,7 @@ export const ReceiveWartModal = ({ address }: ReceiveWartModalProps) => {
         color="default"
         variant="light"
       >
-        Receive WART
+        {t('walletDetails.receiveWART')}
       </Button>
 
       <Modal
@@ -50,9 +52,9 @@ export const ReceiveWartModal = ({ address }: ReceiveWartModalProps) => {
         <ModalContent>
           <div className="space-y-12 px-12 py-12">
             <ModalHeader className="block space-y-6 text-center">
-              <h3 className="text-[28px]">Receive WART</h3>
+              <h3 className="text-[28px]">{t('walletDetails.receiveWART')}</h3>
               <p className="text-lg font-normal text-default-400">
-                Receive WART tokens to your wallet
+                {t('walletDetails.receiveDescription')}
               </p>
             </ModalHeader>
 
@@ -66,10 +68,10 @@ export const ReceiveWartModal = ({ address }: ReceiveWartModalProps) => {
 
             <ModalFooter>
               <Button color="danger" variant="light" onPress={onClose}>
-                Close
+                {t('passwordModal.cancel')}
               </Button>
               <Button color="default" onPress={handleCopy}>
-                Copy
+                {t('walletDetails.copy')}
               </Button>
             </ModalFooter>
           </div>

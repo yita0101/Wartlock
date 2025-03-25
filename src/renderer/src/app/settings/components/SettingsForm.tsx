@@ -1,11 +1,14 @@
-import { addToast, Button, Form, Input } from '@heroui/react'
+import { addToast, Button, Form, Input, Card, Divider } from '@heroui/react'
 import { useEffect, useState } from 'react'
 import { useNavigate } from 'react-router'
+import { useTranslation } from 'react-i18next'
+import { LanguageDropdown } from './LanguageDropdown'
 
 export const SettingsForm = () => {
   const [, setPeer] = useState('')
   const [inputValue, setInputValue] = useState('')
   const navigate = useNavigate()
+  const { t } = useTranslation()
 
   useEffect(() => {
     let isMounted = true
@@ -31,22 +34,22 @@ export const SettingsForm = () => {
 
   const handleConfirm = async () => {
     if (!inputValue.trim()) {
-      alert('Please enter a valid peer')
+      alert(t('settings.peerRequired'))
       return
     }
 
     try {
       await window.dbAPI.updatePeer(inputValue)
       addToast({
-        title: 'Peer updated successfully',
-        description: 'Your peer has been updated successfully',
+        title: t('settings.saved'),
+        description: t('settings.peerUpdated'),
         color: 'success',
         timeout: 2000,
       })
     } catch (error) {
       addToast({
-        title: 'Failed to update peer',
-        description: 'Your peer has not been updated',
+        title: t('settings.error'),
+        description: t('settings.updateFailed'),
         color: 'danger',
         timeout: 2000,
       })
@@ -54,48 +57,58 @@ export const SettingsForm = () => {
   }
 
   return (
-    <Form
-      className="w-full max-w-lg space-y-5"
-      onSubmit={(e) => e.preventDefault()}
-    >
-      <Input
-        type="text"
-        name="peer"
-        errorMessage="Please enter a valid peer"
-        placeholder="Enter your Peer"
-        className="w-full"
-        labelPlacement="outside"
-        label="Peer"
-        size="lg"
-        isRequired
-        variant="faded"
-        autoFocus
-        value={inputValue}
-        onChange={(e) => setInputValue(e.target.value)}
-        classNames={{ inputWrapper: 'bg-default-200' }}
-      />
+    <Card className="w-full max-w-xl bg-default-50 dark:bg-default-100 border-none shadow-md">
+      <Form
+        className="p-10 space-y-6"
+        onSubmit={(e) => e.preventDefault()}
+      >
+        <div className="space-y-5">
+          <h3 className="text-xl font-bold text-default-800 dark:text-default-200">
+            {t('settings.preferences')}
+          </h3>
+          
+          <Divider className="my-2" />
+          
+          <div className="space-y-6 pt-2">
+            <LanguageDropdown />
+            
+            <Input
+              type="text"
+              name="peer"
+              errorMessage={t('settings.invalidPeer')}
+              placeholder={t('settings.enterPeer')}
+              labelPlacement="outside"
+              label={t('settings.peer')}
+              size="lg"
+              isRequired
+              variant="bordered"
+              autoFocus
+              value={inputValue}
+              onChange={(e) => setInputValue(e.target.value)}
+            />
+          </div>
+        </div>
 
-      <div className="ml-auto flex w-3/5 items-center gap-2">
-        <Button
-          type="button"
-          variant="ghost"
-          color="danger"
-          size="lg"
-          fullWidth
-          onPress={handleCancel}
-        >
-          Cancel
-        </Button>
-        <Button
-          type="button"
-          color="secondary"
-          size="lg"
-          fullWidth
-          onPress={handleConfirm}
-        >
-          Confirm
-        </Button>
-      </div>
-    </Form>
+        <div className="flex items-center justify-end gap-3 pt-4">
+          <Button
+            type="button"
+            variant="flat"
+            color="danger"
+            size="md"
+            onPress={handleCancel}
+          >
+            {t('passwordModal.cancel')}
+          </Button>
+          <Button
+            type="button"
+            color="secondary"
+            size="md"
+            onPress={handleConfirm}
+          >
+            {t('passwordModal.confirm')}
+          </Button>
+        </div>
+      </Form>
+    </Card>
   )
 }

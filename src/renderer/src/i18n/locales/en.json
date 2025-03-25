@@ -1,0 +1,154 @@
+{
+  "common": {
+    "createWallet": "Create Wallet",
+    "recoverWallet": "Recover Wallet",
+    "walletName": "Wallet Name",
+    "password": "Password",
+    "confirmPassword": "Confirm Password",
+    "mnemonic": "Mnemonic",
+    "continue": "Continue",
+    "warning": "Warning: Lose these words, lose your wallet. Store them safely!",
+    "copied": "Copied!"
+  },
+  "createWallet": {
+    "title": "Create Wallet",
+    "description": "Create a new wallet to manage your WART tokens",
+    "storeMnemonic": "Store your mnemonic safely:",
+    "invalidPassword": "Invalid password format"
+  },
+  "recoverWallet": {
+    "title": "Recover Wallet",
+    "description": "Recover a wallet to manage your WART tokens",
+    "errorMnemonic": "Please enter a valid mnemonic",
+    "errorWalletName": "Please enter a valid wallet name",
+    "errorPassword": "Please enter a valid password"
+  },
+  "navigation": {
+    "walletManagement": "Wallet Management",
+    "settings": "Settings",
+    "loggedIn": "You are logged in",
+    "logoutFirst": "Please logout first"
+  },
+  "theme": {
+    "lightMode": "Light Mode",
+    "darkMode": "Dark Mode"
+  },
+  "settings": {
+    "title": "Settings",
+    "subtitle": "Customize your application preferences",
+    "appearance": "Appearance",
+    "theme": "Theme",
+    "language": "Language",
+    "selectLanguage": "Select language",
+    "darkMode": "Dark Mode",
+    "lightMode": "Light Mode",
+    "save": "Save Settings",
+    "reset": "Reset to Default",
+    "account": "Account",
+    "security": "Security",
+    "preferences": "Preferences",
+    "saved": "Settings saved successfully",
+    "peer": "Public Full Node",
+    "peerRequired": "Please enter a valid peer",
+    "invalidPeer": "Please enter a valid peer",
+    "enterPeer": "Enter your Peer",
+    "peerUpdated": "Your peer has been updated successfully",
+    "error": "Error",
+    "updateFailed": "Your peer has not been updated"
+  },
+  "wallets": {
+    "noWallets": "No wallets found. Create or recover a wallet to get started.",
+    "addressCopied": "Wallet address copied to clipboard"
+  },
+  "toasts": {
+    "passwordMismatch": {
+      "title": "Mismatched Passwords",
+      "description": "Passwords do not match"
+    },
+    "generateError": {
+      "title": "Error",
+      "description": "Failed to generate mnemonic"
+    },
+    "copied": {
+      "title": "Copied",
+      "description": "Mnemonic copied to clipboard"
+    },
+    "walletCreated": {
+      "title": "Wallet Created",
+      "description": "Your wallet has been created successfully"
+    },
+    "creationFailed": {
+      "title": "Error",
+      "description": "Failed to create wallet"
+    },
+    "invalidPassword": {
+      "title": "Invalid Password",
+      "description": "Password must be at least 8 characters long and contain at least one letter and one number"
+    },
+    "walletRecovered": {
+      "title": "Success",
+      "description": "Wallet successfully recovered"
+    },
+    "duplicateWallet": {
+      "title": "Duplicate Wallet",
+      "description": "This wallet is already added"
+    },
+    "recoveryError": {
+      "title": "Error",
+      "description": "An error occurred while recovering wallet"
+    }
+  },
+  "passwordModal": {
+    "title": "Enter Wallet Password",
+    "passwordPlaceholder": "Enter your password",
+    "invalidPassword": "Please enter a valid password",
+    "viewDetails": "View Wallet Details",
+    "cancel": "Cancel",
+    "confirm": "Confirm",
+    "success": "Success",
+    "successMessage": "You successfully logged in into your wallet",
+    "error": "Error",
+    "errorMessage": "Something went wrong. Please try again",
+    "invalidPasswordError": "The password you entered is incorrect"
+  },
+  "walletDetails": {
+    "title": "Wallet Details",
+    "transactions": "Transactions",
+    "previous": "Previous",
+    "next": "Next",
+    "noTransactions": "No transactions found",
+    "copied": "Copied to clipboard",
+    "loading": "Loading...",
+    "wallet": "Wallet",
+    "walletNotFound": "Wallet Not Found",
+    "balanceWART": "Wallet Balance in WART",
+    "balanceUSD": "Wallet Balance in USD",
+    "searchBySender": "Search by sender...",
+    "logout": "Logout",
+    "makeTransaction": "Make Transaction",
+    "receiveWART": "Receive WART",
+    "transactionSent": "Transaction Sent",
+    "transactionSuccess": "Your transaction has been sent successfully!",
+    "transactionFailed": "Transaction Failed",
+    "transactionError": "Something went wrong while sending the transaction",
+    "amount": "Amount",
+    "networkFee": "Network Fee",
+    "recipient": "Recipient",
+    "sendDescription": "Send WART to other wallets through Wartlock",
+    "receiveDescription": "Receive WART tokens to your wallet",
+    "yourAddress": "Your wallet address",
+    "copy": "Copy Address",
+    "confirm": "Confirm",
+    "addressCopied": "Address copied to clipboard",
+    "tableTitles": {
+      "hash": "HASH",
+      "timestamp": "TIMESTAMP",
+      "amount": "AMOUNT",
+      "fee": "FEE",
+      "sender": "SENDER",
+      "recipient": "RECIPIENT",
+      "actions": "ACTIONS"
+    },
+    "payDevFee": "Pay Developer Fee (5%)"
+  }
+} 

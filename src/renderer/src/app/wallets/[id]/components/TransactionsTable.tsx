@@ -17,6 +17,7 @@ import { LuClock } from 'react-icons/lu'
 import { RiMoneyPoundCircleLine } from 'react-icons/ri'
 import { TbHash } from 'react-icons/tb'
 import { useParams } from 'react-router'
+import { useTranslation } from 'react-i18next'
 import type { Wallet } from '../../types'
 import { Transaction } from '../data'
 
@@ -43,6 +44,17 @@ export const TransactionsTable = ({
   setPage,
 }: TransactionsTableProps) => {
   const { walletId } = useParams<{ walletId: string }>()
+  const { t } = useTranslation()
+  
+  const columns = [
+    { name: t('walletDetails.tableTitles.hash'), uid: 'hash', icon: <TbHash size={20} /> },
+    { name: t('walletDetails.tableTitles.timestamp'), uid: 'timestamp', icon: <LuClock size={20} /> },
+    { name: t('walletDetails.tableTitles.amount'), uid: 'amount', icon: <RiMoneyPoundCircleLine size={20} /> },
+    { name: t('walletDetails.tableTitles.fee'), uid: 'fee', icon: <HiOutlineCurrencyDollar size={20} /> },
+    { name: t('walletDetails.tableTitles.sender'), uid: 'sender', icon: <TbHash size={20} /> },
+    { name: t('walletDetails.tableTitles.recipient'), uid: 'recipient', icon: <TbHash size={20} /> },
+  ]
+  
   const { data: walletAddress, loading: walletLoading } = useRequest<
     Wallet['address'],
     any
@@ -125,7 +137,7 @@ export const TransactionsTable = ({
             variant="flat"
             onPress={onPreviousPage}
           >
-            Previous
+            {t('walletDetails.previous')}
           </Button>
           <Button
             isDisabled={page >= pages}
@@ -133,12 +145,12 @@ export const TransactionsTable = ({
             variant="flat"
             onPress={onNextPage}
           >
-            Next
+            {t('walletDetails.next')}
           </Button>
         </div>
       </div>
     )
-  }, [items.length, page, pages, hasSearchFilter])
+  }, [items.length, page, pages, hasSearchFilter, t])
 
   const renderCell = useCallback(
     (transaction: Transaction, columnKey: React.Key) => {
@@ -198,26 +210,34 @@ export const TransactionsTable = ({
       bottomContent={bottomContent}
       bottomContentPlacement="outside"
       classNames={{ wrapper: 'max-h-[calc(100vh-270px)] scroll-sm' }}
+      radius="lg"
     >
       <TableHeader columns={columns}>
         {(column) => (
-          <TableColumn key={column.uid} align="start" className="py-4">
-            <div className="flex items-center gap-2.5 text-default-600">
-              {column.icon} {column.name}
+          <TableColumn
+            key={column.uid}
+            align={column.uid === 'timestamp' ? 'center' : 'start'}
+            className="px-8 py-4"
+          >
+            <div className="flex items-center gap-2.5">
+              {column?.icon} {column.name}
             </div>
           </TableColumn>
         )}
       </TableHeader>
       <TableBody
-        emptyContent="No transactions found"
         items={items}
+        emptyContent={t('walletDetails.noTransactions')}
         isLoading={isLoading}
-        loadingContent={<Spinner />}
+        className="rounded-[20px] bg-default-100 p-5"
+        loadingContent={<Spinner label={t('walletDetails.loading')} />}
       >
         {(item) => (
           <TableRow key={item.hash}>
             {(columnKey) => (
-              <TableCell>{renderCell(item, columnKey)}</TableCell>
+              <TableCell className="py-5">
+                {renderCell(item, columnKey)}
+              </TableCell>
             )}
           </TableRow>
         )}

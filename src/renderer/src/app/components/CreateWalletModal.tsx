@@ -13,10 +13,11 @@ import {
 } from '@heroui/react'
 import { PasswordInput } from '@renderer/components/PasswordInput'
 import { useToggle } from 'ahooks'
-import { useState } from 'react'
+import { useState, useEffect } from 'react'
 import { GoPlus } from 'react-icons/go'
 import { IoIosEye, IoIosEyeOff } from 'react-icons/io'
 import { MdOutlineContentCopy } from 'react-icons/md'
+import { useTranslation } from 'react-i18next'
 import { useWallet } from '../wallets/WalletContext'
 
 const WALLET_PASSWORD_REGEX = /^(?=.*[A-Za-z])(?=.*\d)[A-Za-z\d]{8,}/
@@ -34,6 +35,12 @@ export const CreateWalletModal = () => {
   const [walletName, setWalletName] = useState('')
   const [mnemonic, setMnemonic] = useState('')
   const [showMnemonic, { toggle: toggleShowMnemonic }] = useToggle(false)
+  const { t, i18n } = useTranslation()
+  const [continueText, setContinueText] = useState(t('common.continue'))
+
+  useEffect(() => {
+    setContinueText(t('common.continue'))
+  }, [i18n.language, t])
 
   const onSubmit = async (e: React.FormEvent<HTMLFormElement>) => {
     e.preventDefault()
@@ -42,8 +49,8 @@ export const CreateWalletModal = () => {
 
     if (password !== passwordConfirm) {
       addToast({
-        title: 'Mismatched Passwords',
-        description: 'Passwords do not match',
+        title: t('toasts.passwordMismatch.title'),
+        description: t('toasts.passwordMismatch.description'),
         color: 'danger',
       })
       return
@@ -56,8 +63,8 @@ export const CreateWalletModal = () => {
       setPassword(password)
     } catch (error) {
       addToast({
-        title: 'Error',
-        description: 'Failed to generate mnemonic',
+        title: t('toasts.generateError.title'),
+        description: t('toasts.generateError.description'),
         color: 'danger',
       })
     }
@@ -66,8 +73,8 @@ export const CreateWalletModal = () => {
   const handleCopy = async () => {
     await navigator.clipboard.writeText(mnemonic)
     addToast({
-      title: 'Copied',
-      description: 'Mnemonic copied to clipboard',
+      title: t('toasts.copied.title'),
+      description: t('toasts.copied.description'),
       color: 'success',
     })
   }
@@ -83,8 +90,8 @@ export const CreateWalletModal = () => {
       await window.dbAPI.insertWallet(walletName, address, encrypted, salt)
 
       addToast({
-        title: 'Wallet Created',
-        description: 'Your wallet has been created successfully',
+        title: t('toasts.walletCreated.title'),
+        description: t('toasts.walletCreated.description'),
         color: 'success',
       })
       setMnemonic('')
@@ -95,8 +102,8 @@ export const CreateWalletModal = () => {
       onClose()
     } catch (error) {
       addToast({
-        title: 'Error',
-        description: 'Failed to create wallet',
+        title: t('toasts.creationFailed.title'),
+        description: t('toasts.creationFailed.description'),
         color: 'danger',
       })
     }
@@ -113,7 +120,7 @@ export const CreateWalletModal = () => {
             'linear-gradient(176.63deg, #725DFD -33.88%, #3E3384 111.03%)',
         }}
       >
-        Create Wallet
+        {t('common.createWallet')}
       </Button>
 
       <Modal
@@ -126,9 +133,9 @@ export const CreateWalletModal = () => {
         <ModalContent>
           <div className="space-y-12 px-12 py-12">
             <ModalHeader className="block space-y-6 text-center">
-              <h3 className="text-[28px]">Create Wallet</h3>
+              <h3 className="text-[28px]">{t('createWallet.title')}</h3>
               <p className="text-lg font-normal text-default-400">
-                Create a new wallet to manage your WART tokens
+                {t('createWallet.description')}
               </p>
             </ModalHeader>
 
@@ -141,7 +148,7 @@ export const CreateWalletModal = () => {
                 >
                   <Input
                     name="name"
-                    label="Wallet Name"
+                    label={t('common.walletName')}
                     labelPlacement="outside"
                     isRequired
                     size="lg"
@@ -151,13 +158,13 @@ export const CreateWalletModal = () => {
                   />
                   <PasswordInput
                     name="password"
-                    label="Password"
+                    label={t('common.password')}
                     labelPlacement="outside"
                     isRequired
                     size="lg"
                     validate={(value) =>
                       !WALLET_PASSWORD_REGEX.test(value)
-                        ? 'Invalid password format'
+                        ? t('createWallet.invalidPassword')
                         : undefined
                     }
                     variant="faded"
@@ -165,7 +172,7 @@ export const CreateWalletModal = () => {
                   />
                   <PasswordInput
                     name="passwordConfirm"
-                    label="Confirm Password"
+                    label={t('common.confirmPassword')}
                     labelPlacement="outside"
                     isRequired
                     size="lg"
@@ -177,7 +184,7 @@ export const CreateWalletModal = () => {
             ) : (
               <ModalBody>
                 <p className="text-center font-bold">
-                  Store your mnemonic safely:
+                  {t('createWallet.storeMnemonic')}
                 </p>
                 <div className="flex items-center gap-3">
                   <Code className="w-[500px] text-wrap break-words text-base">
@@ -209,8 +216,7 @@ export const CreateWalletModal = () => {
                   </div>
                 </div>
                 <p className="text-sm font-bold text-warning">
-                  Warning: Lose these words, lose your wallet. Store them
-                  safely!
+                  {t('common.warning')}
                 </p>
               </ModalBody>
             )}
@@ -224,7 +230,7 @@ export const CreateWalletModal = () => {
                   fullWidth
                   radius="sm"
                 >
-                  Create Wallet
+                  {t('common.createWallet')}
                 </Button>
               ) : (
                 <Button
@@ -232,7 +238,7 @@ export const CreateWalletModal = () => {
                   fullWidth
                   onPress={finalizeWalletCreation}
                 >
-                  Continue
+                  {continueText}
                 </Button>
               )}
             </ModalFooter>

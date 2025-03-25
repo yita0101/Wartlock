@@ -13,6 +13,7 @@ import {
 import { PasswordInput } from '@renderer/components/PasswordInput'
 import { LuEye } from 'react-icons/lu'
 import { useNavigate } from 'react-router'
+import { useTranslation } from 'react-i18next'
 
 interface PasswordModalProps {
   walletId: string
@@ -21,6 +22,7 @@ interface PasswordModalProps {
 export const PasswordModal = ({ walletId }: PasswordModalProps) => {
   const { isOpen, onClose, onOpen } = useDisclosure()
   const navigate = useNavigate()
+  const { t } = useTranslation()
 
   const onSubmit = async (e: React.FormEvent<HTMLFormElement>) => {
     e.preventDefault()
@@ -38,8 +40,8 @@ export const PasswordModal = ({ walletId }: PasswordModalProps) => {
 
       if (!decrypted) {
         addToast({
-          title: 'Invalid Password',
-          description: 'The password you entered is incorrect.',
+          title: t('passwordModal.error'),
+          description: t('passwordModal.invalidPasswordError'),
           color: 'danger',
         })
         return
@@ -48,8 +50,8 @@ export const PasswordModal = ({ walletId }: PasswordModalProps) => {
       await window.storageAPI.storePrivateKey(walletData.address, decrypted)
 
       addToast({
-        title: 'Success',
-        description: 'You successfully logged in into your wallet.',
+        title: t('passwordModal.success'),
+        description: t('passwordModal.successMessage'),
         color: 'success',
       })
 
@@ -58,8 +60,8 @@ export const PasswordModal = ({ walletId }: PasswordModalProps) => {
     } catch (error) {
       console.error('Error decrypting wallet:', error)
       addToast({
-        title: 'Error',
-        description: 'Something went wrong. Please try again.',
+        title: t('passwordModal.error'),
+        description: t('passwordModal.errorMessage'),
         color: 'danger',
       })
     }
@@ -67,7 +69,7 @@ export const PasswordModal = ({ walletId }: PasswordModalProps) => {
 
   return (
     <>
-      <Tooltip content="View Wallet Details" className="overflow-hidden">
+      <Tooltip content={t('passwordModal.viewDetails')} className="overflow-hidden">
         <button onClick={onOpen}>
           <LuEye size={20} />
         </button>
@@ -85,7 +87,7 @@ export const PasswordModal = ({ walletId }: PasswordModalProps) => {
         <ModalContent>
           <div className="space-y-12 px-12 py-12">
             <ModalHeader className="block space-y-6 text-center">
-              <h3 className="text-[28px]">Enter Wallet Password</h3>
+              <h3 className="text-[28px]">{t('passwordModal.title')}</h3>
             </ModalHeader>
 
             <ModalBody>
@@ -96,9 +98,9 @@ export const PasswordModal = ({ walletId }: PasswordModalProps) => {
               >
                 <PasswordInput
                   name="password"
-                  errorMessage="Please enter a valid password"
+                  errorMessage={t('passwordModal.invalidPassword')}
                   labelPlacement="outside"
-                  label="Password"
+                  label={t('common.password')}
                   isRequired
                   size="lg"
                   variant="faded"
@@ -116,7 +118,7 @@ export const PasswordModal = ({ walletId }: PasswordModalProps) => {
                 fullWidth
                 radius="sm"
               >
-                Cancel
+                {t('passwordModal.cancel')}
               </Button>
               <Button
                 color="secondary"
@@ -125,7 +127,7 @@ export const PasswordModal = ({ walletId }: PasswordModalProps) => {
                 fullWidth
                 radius="sm"
               >
-                Confirm
+                {t('passwordModal.confirm')}
               </Button>
             </ModalFooter>
           </div>

@@ -3,9 +3,11 @@ import { useTheme } from '@renderer/providers/ThemeProvider'
 import { motion } from 'framer-motion'
 import { BsMoon } from 'react-icons/bs'
 import { FiSun } from 'react-icons/fi'
+import { useTranslation } from 'react-i18next'
 
 export const SwitchTheme = () => {
   const { theme, toggleTheme } = useTheme()
+  const { t } = useTranslation()
 
   return (
     <div>
@@ -13,8 +15,7 @@ export const SwitchTheme = () => {
         onPress={toggleTheme}
         variant="light"
         className={cn(
-          'hidden w-full min-w-6 items-center justify-start gap-8 text-default-400 hover:text-default-600 dark:flex',
-          theme === 'dark' ? 'flex' : 'hidden',
+          'w-full min-w-6 items-center justify-start gap-8 text-default-400 hover:text-default-600 dark:flex'
         )}
       >
         {theme === 'dark' ? (
@@ -27,7 +28,7 @@ export const SwitchTheme = () => {
           animate={{ opacity: 1 }}
           className="hidden whitespace-pre font-medium group-hover/sidebar:inline"
         >
-          {theme === 'dark' ? 'Dark Mode' : 'Light Mode'}
+          {theme === 'dark' ? t('theme.darkMode') : t('theme.lightMode')}
         </motion.span>
       </Button>
     </div>

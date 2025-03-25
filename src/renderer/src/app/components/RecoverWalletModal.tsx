@@ -12,6 +12,7 @@ import {
 } from '@heroui/react'
 import { PasswordInput } from '@renderer/components/PasswordInput'
 import { useState } from 'react'
+import { useTranslation } from 'react-i18next'
 import { useWallet } from '../wallets/WalletContext'
 
 const WALLET_PASSWORD_REGEX = /^(?=.*[A-Za-z])(?=.*\d)[A-Za-z\d]{8,}/
@@ -20,6 +21,7 @@ export const RecoverWalletModal = () => {
   const { refreshAsync } = useWallet()
   const { isOpen, onClose, onOpen } = useDisclosure()
   const [password, setPassword] = useState('')
+  const { t } = useTranslation()
 
   const onSubmit = async (e: React.FormEvent<HTMLFormElement>) => {
     e.preventDefault()
@@ -34,9 +36,8 @@ export const RecoverWalletModal = () => {
 
     if (!WALLET_PASSWORD_REGEX.test(password)) {
       addToast({
-        title: 'Invalid Password',
-        description:
-          'Password must be at least 8 characters long and contain at least one letter and one number',
+        title: t('toasts.invalidPassword.title'),
+        description: t('toasts.invalidPassword.description'),
         color: 'danger',
       })
       return
@@ -44,8 +45,8 @@ export const RecoverWalletModal = () => {
 
     if (password !== confirmPassword) {
       addToast({
-        title: 'Mismatched Passwords',
-        description: 'Passwords do not match',
+        title: t('toasts.passwordMismatch.title'),
+        description: t('toasts.passwordMismatch.description'),
         color: 'danger',
       })
       return
@@ -61,8 +62,8 @@ export const RecoverWalletModal = () => {
       await window.dbAPI.insertWallet(wallet, address, encrypted, salt)
 
       addToast({
-        title: 'Success',
-        description: 'Wallet successfully recovered',
+        title: t('toasts.walletRecovered.title'),
+        description: t('toasts.walletRecovered.description'),
         color: 'success',
       })
 
@@ -71,14 +72,14 @@ export const RecoverWalletModal = () => {
     } catch (error: any) {
       if (error?.message?.includes('UNIQUE constraint failed')) {
         addToast({
-          title: 'Duplicate Wallet',
-          description: 'This wallet is already added',
+          title: t('toasts.duplicateWallet.title'),
+          description: t('toasts.duplicateWallet.description'),
           color: 'warning',
         })
       } else {
         addToast({
-          title: 'Error',
-          description: 'An error occurred while recovering wallet',
+          title: t('toasts.recoveryError.title'),
+          description: t('toasts.recoveryError.description'),
           color: 'danger',
         })
       }
@@ -87,18 +88,18 @@ export const RecoverWalletModal = () => {
 
   const validatePassword = (value: string) => {
     return !WALLET_PASSWORD_REGEX.test(value)
-      ? 'Password must be at least 8 characters long and contain at least one letter and one number'
+      ? t('recoverWallet.errorPassword')
       : undefined
   }
 
   const validateConfirmPassword = (value: string) => {
-    return value !== password ? 'Passwords do not match' : undefined
+    return value !== password ? t('toasts.passwordMismatch.description') : undefined
   }
 
   return (
     <>
       <Button onPress={onOpen} className="bg-[#27292B] px-9">
-        Recover Wallet
+        {t('common.recoverWallet')}
       </Button>
 
       <Modal
@@ -113,9 +114,9 @@ export const RecoverWalletModal = () => {
         <ModalContent>
           <div className="space-y-12 px-12 py-12">
             <ModalHeader className="block space-y-6 text-center">
-              <h3 className="text-[28px]">Recover Wallet</h3>
+              <h3 className="text-[28px]">{t('recoverWallet.title')}</h3>
               <p className="text-lg font-normal text-default-400">
-                Recover a wallet to manage your WART tokens
+                {t('recoverWallet.description')}
               </p>
             </ModalHeader>
 
@@ -128,9 +129,9 @@ export const RecoverWalletModal = () => {
                 <Input
                   name="wallet"
                   type="text"
-                  errorMessage="Please enter a valid wallet name"
+                  errorMessage={t('recoverWallet.errorWalletName')}
                   labelPlacement="outside"
-                  label="Wallet Name"
+                  label={t('common.walletName')}
                   isRequired
                   size="lg"
                   autoFocus
@@ -140,9 +141,9 @@ export const RecoverWalletModal = () => {
                 <Input
                   name="mnemonic"
                   type="text"
-                  errorMessage="Please enter a valid mnemonic"
+                  errorMessage={t('recoverWallet.errorMnemonic')}
                   labelPlacement="outside"
-                  label="Mnemonic"
+                  label={t('common.mnemonic')}
                   isRequired
                   size="lg"
                   variant="faded"
@@ -150,9 +151,9 @@ export const RecoverWalletModal = () => {
                 />
                 <PasswordInput
                   name="password"
-                  errorMessage="Please enter a valid password"
+                  errorMessage={t('recoverWallet.errorPassword')}
                   labelPlacement="outside"
-                  label="Password"
+                  label={t('common.password')}
                   isRequired
                   size="lg"
                   variant="faded"
@@ -163,7 +164,7 @@ export const RecoverWalletModal = () => {
                 <PasswordInput
                   name="confirmPassword"
                   labelPlacement="outside"
-                  label="Confirm Password"
+                  label={t('common.confirmPassword')}
                   isRequired
                   size="lg"
                   validate={validateConfirmPassword}
@@ -181,7 +182,7 @@ export const RecoverWalletModal = () => {
                 fullWidth
                 radius="sm"
               >
-                Recover Wallet
+                {t('common.recoverWallet')}
               </Button>
             </ModalFooter>
           </div>
