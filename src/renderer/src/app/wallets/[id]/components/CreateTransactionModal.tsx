@@ -8,20 +8,24 @@ import {
   ModalContent,
   ModalHeader,
   useDisclosure,
+  Switch,
 } from '@heroui/react'
 import { useEffect, useState } from 'react'
 import { BiDollar } from 'react-icons/bi'
 import { useParams } from 'react-router'
+import { useTranslation } from 'react-i18next'
 
 export const CreateTransactionModal = () => {
   const { isOpen, onClose, onOpen } = useDisclosure()
   const { walletId } = useParams<{ walletId: string }>()
+  const { t } = useTranslation()
 
-  const [amount, setAmount] = useState('0.00000001')
-  const [developerFee, setDeveloperFee] = useState('0.00000001')
+  const [amount, setAmount] = useState('')
   const [networkFee, setNetworkFee] = useState('0.00000001')
+  const [developerFee, setDeveloperFee] = useState('0')
   const [recipient, setRecipient] = useState('')
   const [walletAddress, setWalletAddress] = useState<string | null>(null)
+  const [payDevFee, setPayDevFee] = useState(true)
 
   useEffect(() => {
     const fetchWalletAddress = async () => {
@@ -39,16 +43,21 @@ export const CreateTransactionModal = () => {
   }, [walletId])
 
   useEffect(() => {
-    const calculatedDevFee = (parseFloat(amount) * 0.05).toFixed(8)
-    setDeveloperFee(calculatedDevFee)
-  }, [amount])
+    if (amount && payDevFee) {
+      // 计算5%的开发者费用
+      const devFee = (parseFloat(amount) * 0.05).toFixed(8)
+      setDeveloperFee(devFee)
+    } else {
+      setDeveloperFee('0')
+    }
+  }, [amount, payDevFee])
 
   const onSubmit = async (e: React.FormEvent<HTMLFormElement>) => {
     e.preventDefault()
     if (!walletAddress) {
       addToast({
-        title: 'Error',
-        description: 'Wallet address not found',
+        title: t('walletDetails.error'),
+        description: t('walletDetails.walletNotFound'),
         color: 'danger',
         timeout: 2000,
       })
@@ -86,8 +95,8 @@ export const CreateTransactionModal = () => {
       }
 
       addToast({
-        title: 'Transaction Sent',
-        description: 'Your transaction has been sent successfully!',
+        title: t('walletDetails.transactionSent'),
+        description: t('walletDetails.transactionSuccess'),
         color: 'success',
         timeout: 2000,
       })
@@ -96,8 +105,8 @@ export const CreateTransactionModal = () => {
     } catch (err) {
       console.error('Transaction failed:', err)
       addToast({
-        title: 'Transaction Failed',
-        description: 'Something went wrong while sending the transaction',
+        title: t('walletDetails.transactionFailed'),
+        description: t('walletDetails.transactionError'),
         color: 'danger',
         timeout: 2000,
       })
@@ -113,7 +122,7 @@ export const CreateTransactionModal = () => {
         startContent={<BiDollar className="text-default-800" size={20} />}
         onPress={onOpen}
       >
-        Make Transaction
+        {t('walletDetails.makeTransaction')}
       </Button>
 
       <Modal
@@ -128,9 +137,9 @@ export const CreateTransactionModal = () => {
         <ModalContent>
           <div className="space-y-12 px-12 py-12">
             <ModalHeader className="block space-y-6 text-center">
-              <h3 className="text-[28px]">Make a Transaction</h3>
+              <h3 className="text-[28px]">{t('walletDetails.makeTransaction')}</h3>
               <p className="text-lg font-normal text-default-400">
-                Send WART to other wallets through Wartlock
+                {t('walletDetails.sendDescription')}
               </p>
             </ModalHeader>
             <ModalBody>
@@ -139,7 +148,7 @@ export const CreateTransactionModal = () => {
                   name="amount"
                   type="number"
                   labelPlacement="outside"
-                  label="Amount"
+                  label={t('walletDetails.amount')}
                   isRequired
                   size="lg"
                   autoFocus
@@ -152,7 +161,7 @@ export const CreateTransactionModal = () => {
                   name="networkFee"
                   type="number"
                   labelPlacement="outside"
-                  label="Network Fee"
+                  label={t('walletDetails.networkFee')}
                   isRequired
                   size="lg"
                   variant="faded"
@@ -160,22 +169,32 @@ export const CreateTransactionModal = () => {
                   onChange={(e) => setNetworkFee(e.target.value)}
                   classNames={{ inputWrapper: 'bg-default-200' }}
                 />
+                <div className="flex items-center justify-between mb-4">
+                  <span className="text-md font-medium text-text-secondary dark:text-text-secondary mr-4">
+                    {t('walletDetails.payDevFee', 'Pay Developer Fee (5%)')}
+                  </span>
+                  <Switch
+                    isSelected={payDevFee}
+                    onValueChange={setPayDevFee}
+                    size="md"
+                    color="primary"
+                  />
+                </div>
                 <Input
                   name="developerFee"
                   type="number"
                   labelPlacement="outside"
-                  label="Developer Fee (5%)"
                   size="lg"
                   variant="faded"
                   value={developerFee}
+                  isDisabled={!payDevFee}
                   onChange={(e) => setDeveloperFee(e.target.value)}
-                  classNames={{ inputWrapper: 'bg-default-200' }}
                 />
                 <Input
                   name="recipient"
                   type="text"
                   labelPlacement="outside"
-                  label="Recipient"
+                  label={t('walletDetails.recipient')}
                   isRequired
                   size="lg"
                   variant="faded"
@@ -184,7 +203,7 @@ export const CreateTransactionModal = () => {
                   classNames={{ inputWrapper: 'bg-default-200' }}
                 />
                 <Button color="default" type="submit" fullWidth radius="sm">
-                  Make Transaction
+                  {t('walletDetails.confirm')}
                 </Button>
               </Form>
             </ModalBody>

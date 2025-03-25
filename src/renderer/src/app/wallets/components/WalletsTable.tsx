@@ -14,29 +14,31 @@ import { IoCalendarOutline } from 'react-icons/io5'
 import { LuWallet } from 'react-icons/lu'
 import { MdOutlineRadar } from 'react-icons/md'
 import { RiMoneyEuroCircleLine } from 'react-icons/ri'
+import { useTranslation } from 'react-i18next'
 import { type Wallet } from '../types'
 import { useWallet } from '../WalletContext'
 import { PasswordModal } from './PasswordModal'
 
-export const columns = [
-  { name: 'NAME', uid: 'name', icon: <LuWallet size={20} /> },
-  { name: 'ADDRESS', uid: 'address', icon: <MdOutlineRadar size={20} /> },
-  {
-    name: 'LAST BALANCE',
-    uid: 'lastIdentifiedBalance',
-    icon: <RiMoneyEuroCircleLine size={20} />,
-  },
-  {
-    name: 'LAST DATE',
-    uid: 'lastIdentifiedDate',
-    icon: <IoCalendarOutline size={20} />,
-  },
-  { name: 'ACTIONS', uid: 'actions' },
-]
-
 export const WalletsTable = () => {
   const { wallets, loading } = useWallet()
   const [page, setPage] = useState(1)
+  const { t } = useTranslation()
+
+  const columns = [
+    { name: t('walletDetails.tableTitles.sender'), uid: 'name', icon: <LuWallet size={20} /> },
+    { name: t('walletDetails.tableTitles.recipient'), uid: 'address', icon: <MdOutlineRadar size={20} /> },
+    {
+      name: t('walletDetails.balanceWART'),
+      uid: 'lastIdentifiedBalance',
+      icon: <RiMoneyEuroCircleLine size={20} />,
+    },
+    {
+      name: t('walletDetails.tableTitles.timestamp'),
+      uid: 'lastIdentifiedDate',
+      icon: <IoCalendarOutline size={20} />,
+    },
+    { name: t('walletDetails.tableTitles.actions'), uid: 'actions' },
+  ]
 
   const rowsPerPage = 10
 
@@ -81,7 +83,7 @@ export const WalletsTable = () => {
             variant="flat"
             onPress={onPreviousPage}
           >
-            Previous
+            {t('walletDetails.previous')}
           </Button>
           <Button
             isDisabled={pages === 1}
@@ -89,12 +91,12 @@ export const WalletsTable = () => {
             variant="flat"
             onPress={onNextPage}
           >
-            Next
+            {t('walletDetails.next')}
           </Button>
         </div>
       </div>
     )
-  }, [items.length, page, pages])
+  }, [items.length, page, pages, t])
 
   const renderCell = useCallback((wallet: Wallet, columnKey: React.Key) => {
     const cellValue = wallets[columnKey as keyof Wallet]
@@ -170,7 +172,7 @@ export const WalletsTable = () => {
       </TableHeader>
       <TableBody
         items={items}
-        emptyContent="No wallets"
+        emptyContent={t('wallets.noWallets')}
         isLoading={loading}
         className="rounded-[20px] bg-default-100 p-5"
       >

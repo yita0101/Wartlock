@@ -3,13 +3,16 @@ import { SettingsForm } from './components/SettingsForm'
 import { SettingsNavbar } from './components/SettingsNavbar'
 
 const Settings = () => {
+  
   return (
     <WalletProvider>
-      <main>
+      <main className="min-h-screen bg-gradient-to-b from-default-50 to-default-100 ">
         <SettingsNavbar />
-        <section className="flex h-page items-center justify-center rounded-[20px] bg-default-100 p-5">
-          <SettingsForm />
-        </section>
+        <div className="container mx-auto px-4 py-8">
+          <section className="flex items-center justify-center">
+            <SettingsForm />
+          </section>
+        </div>
       </main>
     </WalletProvider>
   )

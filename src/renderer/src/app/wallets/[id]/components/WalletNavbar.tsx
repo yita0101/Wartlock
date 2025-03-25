@@ -4,8 +4,9 @@ import { useCallback } from 'react'
 import { LuSearch } from 'react-icons/lu'
 import { RiLogoutCircleRLine } from 'react-icons/ri'
 import { useNavigate, useParams } from 'react-router'
+import { useTranslation } from 'react-i18next'
 import { CreateTransactionModal } from './CreateTransactionModal'
-import { ReceiveWartModal } from './CreateWalletModal'
+import { ReceiveWartModal } from './ReceiveWartModal'
 
 type Wallet = {
   name: string
@@ -27,6 +28,7 @@ export const WalletNavbar = ({
 }: WalletNavbarProps) => {
   const { walletId } = useParams<{ walletId: string }>()
   const navigate = useNavigate()
+  const { t } = useTranslation()
   const { data: walletData, loading: walletLoading } = useRequest<Wallet, any>(
     async () => {
       if (!walletId) {
@@ -137,25 +139,25 @@ export const WalletNavbar = ({
       <div className="flex items-center justify-between">
         <h2 className="text-2xl">
           {walletLoading
-            ? 'Loading...'
+            ? t('walletDetails.loading')
             : walletData
-              ? `${walletData.name}'s Wallet`
-              : 'Wallet Not Found'}
+              ? `${walletData.name}'s ${t('walletDetails.wallet')}`
+              : t('walletDetails.walletNotFound')}
         </h2>
 
         <div className="flex items-center justify-center gap-4">
           <Chip variant="dot" color="warning">
-            <span className="font-light">Wallet Balance in WART</span>:{' '}
+            <span className="font-light">{t('walletDetails.balanceWART')}</span>:{' '}
             <span className="font-medium text-warning">
-              {balanceData?.balanceWART ?? 'Loading...'}
+              {balanceData?.balanceWART ?? t('walletDetails.loading')}
             </span>
           </Chip>
           <Chip variant="dot" color="success">
-            <span className="font-light">Wallet Balance in USD</span>:{' '}
+            <span className="font-light">{t('walletDetails.balanceUSD')}</span>:{' '}
             <span className="font-medium text-success">
               {balanceData?.balanceUSD !== undefined
                 ? `$${balanceData.balanceUSD.toFixed(2)}`
-                : 'Loading...'}
+                : t('walletDetails.loading')}
             </span>
           </Chip>
         </div>
@@ -165,7 +167,7 @@ export const WalletNavbar = ({
         <Input
           isClearable
           className="w-full sm:max-w-[33%]"
-          placeholder="Search by sender..."
+          placeholder={t('walletDetails.searchBySender')}
           startContent={<LuSearch className="text-default-400" />}
           value={filterValue}
           onClear={onClear}
