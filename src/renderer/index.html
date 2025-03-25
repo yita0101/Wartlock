@@ -9,11 +9,11 @@
       content="default-src 'self'; script-src 'self' 'unsafe-inline'; style-src 'self' 'unsafe-inline'; img-src 'self' data:"
     />
     <script>
-      // 从localStorage中获取主题或使用系统偏好设置
+      // 从localStorage中获取主题或使用暗色主题
       (function() {
         const savedTheme = localStorage.getItem('theme');
-        const prefersDarkTheme = window.matchMedia('(prefers-color-scheme: dark)').matches;
-        const initialTheme = savedTheme || (prefersDarkTheme ? 'dark' : 'light');
+        // 默认使用暗色主题
+        const initialTheme = savedTheme || 'dark';
         
         // 应用主题到HTML元素
         document.documentElement.classList.add(initialTheme);

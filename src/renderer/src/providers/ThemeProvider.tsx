@@ -25,15 +25,13 @@ export const ThemeProvider = ({ children }: { children: React.ReactNode }) => {
   }
 
   useEffect(() => {
-    // 检查系统主题偏好
-    const prefersDarkTheme = window.matchMedia('(prefers-color-scheme: dark)').matches
+    // 检查是否有保存的主题设置
     const savedTheme = localStorage.getItem('theme') as Theme
     
-    // 如果没有保存的主题，使用系统偏好
+    // 如果没有保存的主题，始终使用暗色主题
     if (!savedTheme) {
-      const initialTheme = prefersDarkTheme ? 'dark' : 'light'
-      setTheme(initialTheme)
-      localStorage.setItem('theme', initialTheme)
+      setTheme('dark')
+      localStorage.setItem('theme', 'dark')
     }
     
     // 应用正确的主题类到文档根元素
