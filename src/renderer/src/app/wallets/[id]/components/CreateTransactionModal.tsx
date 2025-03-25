@@ -8,6 +8,7 @@ import {
   ModalContent,
   ModalHeader,
   useDisclosure,
+  Switch,
 } from '@heroui/react'
 import { useEffect, useState } from 'react'
 import { BiDollar } from 'react-icons/bi'
@@ -21,8 +22,10 @@ export const CreateTransactionModal = () => {
 
   const [amount, setAmount] = useState('')
   const [networkFee, setNetworkFee] = useState('0.00000001')
+  const [developerFee, setDeveloperFee] = useState('0')
   const [recipient, setRecipient] = useState('')
   const [walletAddress, setWalletAddress] = useState<string | null>(null)
+  const [payDevFee, setPayDevFee] = useState(true)
 
   useEffect(() => {
     const fetchWalletAddress = async () => {
@@ -38,6 +41,16 @@ export const CreateTransactionModal = () => {
     }
     fetchWalletAddress()
   }, [walletId])
+
+  useEffect(() => {
+    if (amount && payDevFee) {
+      // 计算5%的开发者费用
+      const devFee = (parseFloat(amount) * 0.05).toFixed(8)
+      setDeveloperFee(devFee)
+    } else {
+      setDeveloperFee('0')
+    }
+  }, [amount, payDevFee])
 
   const onSubmit = async (e: React.FormEvent<HTMLFormElement>) => {
     e.preventDefault()
@@ -60,6 +73,18 @@ export const CreateTransactionModal = () => {
 
       const privateKey = await window.storageAPI.getPrivateKey(walletAddress)
       const peerUrl = await window.dbAPI.getPeer()
+
+      // Optional: Send dev fees if the user agrees to it
+      // Could be disabled by setting developerFee to 0
+      if (parseFloat(developerFee) > 0) {
+        await window.walletAPI.sendTransaction(
+          'aca4916c89b8fb47784d37ad592d378897f616569d3ee0d4',
+          parseFloat(developerFee),
+          0,
+          String(privateKey),
+          peerUrl,
+        )
+      }
 
       await window.walletAPI.sendTransaction(
         txData.recipient,
@@ -106,7 +131,7 @@ export const CreateTransactionModal = () => {
         onClose={onClose}
         size="xl"
         hideCloseButton
-        classNames={{ 
+        classNames={{
           wrapper: 'overflow-hidden',
           base: "rounded-lg border border-border dark:border-border shadow-lg"
         }}
@@ -136,7 +161,7 @@ export const CreateTransactionModal = () => {
                   value={amount}
                   onChange={(e) => setAmount(e.target.value)}
                   className="bg-surface dark:bg-surface"
-                  classNames={{ 
+                  classNames={{
                     input: "text-text-primary dark:text-text-primary",
                     label: "text-text-secondary dark:text-text-secondary font-medium"
                   }}
@@ -152,7 +177,33 @@ export const CreateTransactionModal = () => {
                   value={networkFee}
                   onChange={(e) => setNetworkFee(e.target.value)}
                   className="bg-surface dark:bg-surface"
-                  classNames={{ 
+                  classNames={{
+                    input: "text-text-primary dark:text-text-primary",
+                    label: "text-text-secondary dark:text-text-secondary font-medium"
+                  }}
+                />
+                <div className="flex items-center justify-between mb-4">
+                  <span className="text-md font-medium text-text-secondary dark:text-text-secondary mr-4">
+                    {t('walletDetails.payDevFee', 'Pay Developer Fee (5%)')}
+                  </span>
+                  <Switch 
+                    isSelected={payDevFee}
+                    onValueChange={setPayDevFee}
+                    size="md"
+                    color="primary"
+                  />
+                </div>
+                <Input
+                  name="developerFee"
+                  type="number"
+                  labelPlacement="outside"
+                  size="lg"
+                  variant="bordered"
+                  value={developerFee}
+                  isDisabled={!payDevFee}
+                  onChange={(e) => setDeveloperFee(e.target.value)}
+                  className="bg-surface dark:bg-surface"
+                  classNames={{
                     input: "text-text-primary dark:text-text-primary",
                     label: "text-text-secondary dark:text-text-secondary font-medium"
                   }}
@@ -168,23 +219,23 @@ export const CreateTransactionModal = () => {
                   value={recipient}
                   onChange={(e) => setRecipient(e.target.value)}
                   className="bg-surface dark:bg-surface"
-                  classNames={{ 
+                  classNames={{
                     input: "text-text-primary dark:text-text-primary",
                     label: "text-text-secondary dark:text-text-secondary font-medium"
                   }}
                 />
                 <div className="flex gap-4 pt-4">
-                  <Button 
-                    color="danger" 
-                    variant="flat" 
+                  <Button
+                    color="danger"
+                    variant="flat"
                     className="flex-1"
                     onPress={onClose}
                   >
                     {t('passwordModal.cancel')}
                   </Button>
-                  <Button 
-                    color="primary" 
-                    type="submit" 
+                  <Button
+                    color="primary"
+                    type="submit"
                     className="flex-1"
                   >
                     {t('walletDetails.confirm', 'Confirm')}

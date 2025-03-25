@@ -141,6 +141,7 @@
       "fee": "FEE",
       "sender": "SENDER",
       "recipient": "RECIPIENT"
-    }
+    },
+    "payDevFee": "Pay Developer Fee (5%)"
   }
 } 
