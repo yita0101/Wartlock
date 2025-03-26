@@ -57,16 +57,19 @@ export const SettingsForm: FC = () => {
   }
 
   return (
-    <Card className="w-full max-w-xl border-none bg-default-50 shadow-md dark:bg-default-100">
-      <Form className="space-y-6 p-10" onSubmit={(e) => e.preventDefault()}>
+    <Card className="w-full max-w-2xl border-none bg-default-500 shadow-md dark:bg-default-100">
+      <Form
+        className="flex flex-col items-center space-y-6 p-10"
+        onSubmit={(e) => e.preventDefault()}
+      >
         <div className="space-y-5">
-          <h3 className="text-xl font-bold text-default-800 dark:text-default-200">
+          <h3 className="text-xl font-bold text-default-200 dark:text-default-800">
             {t('settings.preferences')}
           </h3>
 
           <Divider className="my-2" />
 
-          <div className="space-y-6 pt-2">
+          <div className="min-w-96 space-y-16 pt-2">
             <LanguageDropdown />
 
             <Input

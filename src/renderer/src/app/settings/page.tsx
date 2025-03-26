@@ -8,8 +8,8 @@ const Settings: FC = () => {
     <WalletProvider>
       <main className="min-h-screen bg-gradient-to-b from-default-50 to-default-100">
         <SettingsNavbar />
-        <div className="container mx-auto px-4 py-8">
-          <section className="flex items-center justify-center">
+        <div className="container mx-auto px-4">
+          <section className="flex h-page items-center justify-center">
             <SettingsForm />
           </section>
         </div>

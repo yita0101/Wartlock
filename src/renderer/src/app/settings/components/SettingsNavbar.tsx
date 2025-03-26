@@ -1,5 +1,4 @@
 import {
-  Divider,
   NavbarBrand,
   Navbar as NavbarComponent,
   NavbarContent,
@@ -19,13 +18,13 @@ export const SettingsNavbar: FC = () => {
     <>
       <NavbarComponent
         maxWidth="full"
-        className="border-b border-default-200 bg-default-50/90 py-4 backdrop-blur-sm dark:border-default-700 dark:bg-default-900/90"
+        className="border-b-2 border-default-700 bg-default-900/90 py-4 backdrop-blur-sm dark:border-default-200 dark:bg-default-50/90"
       >
         <div className="container mx-auto flex items-center px-4">
           <NavbarBrand>
             <Link
               to="/"
-              className="flex items-center gap-2 text-default-700 transition-colors hover:text-primary-500 dark:text-default-300 dark:hover:text-primary-400"
+              className="flex items-center gap-2 text-default-300 transition-colors hover:text-primary-500 dark:text-default-700 dark:hover:text-primary-400"
             >
               <IoMdArrowBack size={20} />
               <span className="font-medium">
@@ -44,7 +43,6 @@ export const SettingsNavbar: FC = () => {
           </NavbarContent>
         </div>
       </NavbarComponent>
-      <Divider className="opacity-0" />
     </>
   )
 }

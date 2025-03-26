@@ -2,6 +2,7 @@ import { electronApp, is, optimizer } from '@electron-toolkit/utils'
 import { app, BrowserWindow, ipcMain, shell } from 'electron'
 import { join } from 'path'
 import icon from '../../resources/icon.png?asset'
+import { removeConsoleLogs } from './utils/remove-console-logs'
 
 import { decryptPrivateKey, encryptPrivateKey } from './backend/crypto'
 import { WalletDB } from './backend/db'
@@ -18,6 +19,8 @@ import {
   storePrivateKey,
 } from './backend/storage'
 import { walletFromPkHex, walletFromSeed } from './backend/wallet'
+
+removeConsoleLogs()
 
 function createWindow(): void {
   const mainWindow = new BrowserWindow({

@@ -105,7 +105,7 @@ export const RecoverWalletModal: FC = () => {
 
   return (
     <>
-      <Button onPress={onOpen} className="bg-[#27292B] px-9">
+      <Button onPress={onOpen} className="px-9">
         {t('common.recoverWallet')}
       </Button>
 

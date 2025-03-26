@@ -13,7 +13,7 @@ import {
 } from '@heroui/react'
 import { PasswordInput } from '@renderer/components/PasswordInput'
 import { useToggle } from 'ahooks'
-import { useEffect, useState, type FC } from 'react'
+import { useState, type FC } from 'react'
 import { useTranslation } from 'react-i18next'
 import { GoPlus } from 'react-icons/go'
 import { IoIosEye, IoIosEyeOff } from 'react-icons/io'
@@ -35,12 +35,8 @@ export const CreateWalletModal: FC = () => {
   const [walletName, setWalletName] = useState('')
   const [mnemonic, setMnemonic] = useState('')
   const [showMnemonic, { toggle: toggleShowMnemonic }] = useToggle(false)
-  const { t, i18n } = useTranslation()
-  const [continueText, setContinueText] = useState(t('common.continue'))
-
-  useEffect(() => {
-    setContinueText(t('common.continue'))
-  }, [i18n.language, t])
+  const { t } = useTranslation()
+  const [continueText] = useState(() => t('common.continue'))
 
   const onSubmit = async (
     e: React.FormEvent<HTMLFormElement>,
@@ -117,10 +113,8 @@ export const CreateWalletModal: FC = () => {
         onPress={onOpen}
         className="px-7"
         startContent={<GoPlus size={20} />}
-        style={{
-          backgroundImage:
-            'linear-gradient(176.63deg, #725DFD -33.88%, #3E3384 111.03%)',
-        }}
+        variant="shadow"
+        color="secondary"
       >
         {t('common.createWallet')}
       </Button>
