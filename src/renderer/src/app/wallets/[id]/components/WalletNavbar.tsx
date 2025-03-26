@@ -94,6 +94,8 @@ export const WalletNavbar: FC<WalletNavbarProps> = ({
         }),
       )
 
+      await window.dbAPI.updateBalance(walletData.address, String(balanceWART))
+
       return {
         balanceWART,
         balanceUSD,
