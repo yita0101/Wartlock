@@ -1,15 +1,15 @@
 import { Input } from '@heroui/react'
-import { useState, type ComponentProps } from 'react'
+import { FC, useState, type ComponentProps } from 'react'
 import { FaEye, FaEyeSlash } from 'react-icons/fa'
 
 type PasswordInputProps = ComponentProps<typeof Input>
 
-export const PasswordInput = ({
+export const PasswordInput: FC<PasswordInputProps> = ({
   label = 'Password',
   ...props
 }: PasswordInputProps) => {
   const [isVisible, setIsVisible] = useState(false)
-  const toggleVisibility = () => setIsVisible(!isVisible)
+  const toggleVisibility = (): void => setIsVisible(!isVisible)
 
   return (
     <Input

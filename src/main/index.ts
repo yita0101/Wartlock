@@ -6,7 +6,12 @@ import icon from '../../resources/icon.png?asset'
 import { decryptPrivateKey, encryptPrivateKey } from './backend/crypto'
 import { WalletDB } from './backend/db'
 import { generateMnemonic, mnemonicToSeed } from './backend/mnemo'
-import { getWalletTransactions, getBalance, fetchWarthogPrice, sendTransaction } from './backend/network'
+import {
+  fetchWarthogPrice,
+  getBalance,
+  getWalletTransactions,
+  sendTransaction,
+} from './backend/network'
 import {
   deletePrivateKey,
   getPrivateKey,
@@ -114,8 +119,10 @@ app.whenReady().then(() => {
     getBalance(peerUrl, address),
   )
   ipcMain.handle('fetchWarthogPrice', () => fetchWarthogPrice())
-  ipcMain.handle('sendTransaction', (_, recipient, amount, fee, privateKey, peerUrl) =>
-    sendTransaction(recipient, amount, fee, privateKey, peerUrl),
+  ipcMain.handle(
+    'sendTransaction',
+    (_, recipient, amount, fee, privateKey, peerUrl) =>
+      sendTransaction(recipient, amount, fee, privateKey, peerUrl),
   )
   // ipcMain.handle("walletFromPrivateKey", (_, pkHex) => walletFromPrivateKey(pkHex));
   // ipcMain.handle("addressFromPublicKey", (_, pubKey) => addressFromPublicKey(pubKey));

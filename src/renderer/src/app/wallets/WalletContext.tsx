@@ -1,19 +1,27 @@
 import { useRequest } from 'ahooks'
-import { createContext, useContext } from 'react'
+import { createContext, useContext, type FC } from 'react'
 import type { Wallet } from './types'
+
+type WalletContextType = {
+  wallets: Wallet[]
+  loading: boolean
+  refreshAsync: () => Promise<Wallet[]>
+}
 
 export const WalletContext = createContext<{
   wallets: Wallet[]
   loading: boolean
   refreshAsync: () => Promise<Wallet[]>
-}>(null as any)
+} | null>(null)
 
-export const WalletProvider = ({ children }: { children: React.ReactNode }) => {
+export const WalletProvider: FC<{ children: React.ReactNode }> = ({
+  children,
+}) => {
   const {
     data: wallets = [],
     loading,
     refreshAsync,
-  } = useRequest<Wallet[], any>(window.dbAPI.getWallets, {
+  } = useRequest<Wallet[], Error[]>(window.dbAPI.getWallets, {
     cacheKey: 'wallets',
   })
 
@@ -24,7 +32,7 @@ export const WalletProvider = ({ children }: { children: React.ReactNode }) => {
   )
 }
 
-export const useWallet = () => {
+export const useWallet = (): WalletContextType => {
   const context = useContext(WalletContext)
   if (!context) {
     throw new Error('useWallet must be used within a WalletProvider')

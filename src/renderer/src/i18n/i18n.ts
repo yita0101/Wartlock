@@ -1,6 +1,6 @@
 import i18n from 'i18next'
-import { initReactI18next } from 'react-i18next'
 import LanguageDetector from 'i18next-browser-languagedetector'
+import { initReactI18next } from 'react-i18next'
 
 // 导入翻译文件
 import en from './locales/en.json'
@@ -16,20 +16,20 @@ i18n
   .init({
     resources: {
       en: {
-        translation: en
+        translation: en,
       },
       zh: {
-        translation: zh
-      }
+        translation: zh,
+      },
     },
     fallbackLng: 'en', // 如果用户语言不可用，则使用英语
     interpolation: {
-      escapeValue: false // 不转义HTML
+      escapeValue: false, // 不转义HTML
     },
     detection: {
       order: ['localStorage', 'navigator'],
-      caches: ['localStorage'] // 将语言选择缓存在localStorage中
-    }
+      caches: ['localStorage'], // 将语言选择缓存在localStorage中
+    },
   })
 
 export default i18n

@@ -7,28 +7,28 @@ import {
   ModalBody,
   ModalContent,
   ModalHeader,
-  useDisclosure,
   Switch,
+  useDisclosure,
 } from '@heroui/react'
-import { useEffect, useState } from 'react'
+import { useEffect, useState, type FC } from 'react'
+import { useTranslation } from 'react-i18next'
 import { BiDollar } from 'react-icons/bi'
 import { useParams } from 'react-router'
-import { useTranslation } from 'react-i18next'
 
-export const CreateTransactionModal = () => {
+export const CreateTransactionModal: FC = () => {
   const { isOpen, onClose, onOpen } = useDisclosure()
   const { walletId } = useParams<{ walletId: string }>()
   const { t } = useTranslation()
 
   const [amount, setAmount] = useState('')
   const [networkFee, setNetworkFee] = useState('0.00000001')
-  const [developerFee, setDeveloperFee] = useState('0')
+  const [developerFee, setDeveloperFee] = useState('5')
   const [recipient, setRecipient] = useState('')
   const [walletAddress, setWalletAddress] = useState<string | null>(null)
   const [payDevFee, setPayDevFee] = useState(true)
 
   useEffect(() => {
-    const fetchWalletAddress = async () => {
+    const fetchWalletAddress = async (): Promise<void> => {
       if (!walletId) return
       try {
         const walletData = await window.dbAPI.getWalletById(Number(walletId))
@@ -47,12 +47,12 @@ export const CreateTransactionModal = () => {
       // 计算5%的开发者费用
       const devFee = (parseFloat(amount) * 0.05).toFixed(8)
       setDeveloperFee(devFee)
-    } else {
-      setDeveloperFee('0')
     }
   }, [amount, payDevFee])
 
-  const onSubmit = async (e: React.FormEvent<HTMLFormElement>) => {
+  const onSubmit = async (
+    e: React.FormEvent<HTMLFormElement>,
+  ): Promise<void> => {
     e.preventDefault()
     if (!walletAddress) {
       addToast({
@@ -137,7 +137,9 @@ export const CreateTransactionModal = () => {
         <ModalContent>
           <div className="space-y-12 px-12 py-12">
             <ModalHeader className="block space-y-6 text-center">
-              <h3 className="text-[28px]">{t('walletDetails.makeTransaction')}</h3>
+              <h3 className="text-[28px]">
+                {t('walletDetails.makeTransaction')}
+              </h3>
               <p className="text-lg font-normal text-default-400">
                 {t('walletDetails.sendDescription')}
               </p>
@@ -169,8 +171,8 @@ export const CreateTransactionModal = () => {
                   onChange={(e) => setNetworkFee(e.target.value)}
                   classNames={{ inputWrapper: 'bg-default-200' }}
                 />
-                <div className="flex items-center justify-between mb-4">
-                  <span className="text-md font-medium text-text-secondary dark:text-text-secondary mr-4">
+                <div className="mb-4 flex items-center justify-between">
+                  <span className="text-md text-text-secondary dark:text-text-secondary mr-4 font-medium">
                     {t('walletDetails.payDevFee', 'Pay Developer Fee (5%)')}
                   </span>
                   <Switch

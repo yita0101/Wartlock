@@ -1,11 +1,12 @@
 import { Button, cn } from '@heroui/react'
 import { useTheme } from '@renderer/providers/ThemeProvider'
 import { motion } from 'framer-motion'
+import type { FC } from 'react'
+import { useTranslation } from 'react-i18next'
 import { BsMoon } from 'react-icons/bs'
 import { FiSun } from 'react-icons/fi'
-import { useTranslation } from 'react-i18next'
 
-export const SwitchTheme = () => {
+export const SwitchTheme: FC = () => {
   const { theme, toggleTheme } = useTheme()
   const { t } = useTranslation()
 
@@ -15,7 +16,7 @@ export const SwitchTheme = () => {
         onPress={toggleTheme}
         variant="light"
         className={cn(
-          'w-full min-w-6 items-center justify-start gap-8 text-default-400 hover:text-default-600 dark:flex'
+          'w-full min-w-6 items-center justify-start gap-8 text-default-400 hover:text-default-600 dark:flex',
         )}
       >
         {theme === 'dark' ? (

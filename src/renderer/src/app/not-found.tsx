@@ -1,6 +1,7 @@
+import type { FC } from 'react'
 import { Navigate } from 'react-router'
 
-const NotFound = () => {
+const NotFound: FC = () => {
   return <Navigate to="/" replace />
   // return (
   //   <div className="flex h-screen flex-col items-center justify-center bg-background px-4 text-center">

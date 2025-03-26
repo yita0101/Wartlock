@@ -11,15 +11,15 @@ import {
   TableRow,
 } from '@heroui/react'
 import { useRequest } from 'ahooks'
-import React, { useCallback, useMemo } from 'react'
+import React, { useCallback, useMemo, type FC } from 'react'
+import { useTranslation } from 'react-i18next'
 import { HiOutlineCurrencyDollar } from 'react-icons/hi'
 import { LuClock } from 'react-icons/lu'
 import { RiMoneyPoundCircleLine } from 'react-icons/ri'
 import { TbHash } from 'react-icons/tb'
 import { useParams } from 'react-router'
-import { useTranslation } from 'react-i18next'
 import type { Wallet } from '../../types'
-import { Transaction } from '../data'
+import type { Transaction } from '../types'
 
 export const columns = [
   { name: 'HASH', uid: 'hash', icon: <TbHash size={20} /> },
@@ -38,26 +38,50 @@ type TransactionsTableProps = {
   setPage: (value: number) => void
 }
 
-export const TransactionsTable = ({
+export const TransactionsTable: FC<TransactionsTableProps> = ({
   filterValue,
   page,
   setPage,
-}: TransactionsTableProps) => {
+}) => {
   const { walletId } = useParams<{ walletId: string }>()
   const { t } = useTranslation()
-  
+
   const columns = [
-    { name: t('walletDetails.tableTitles.hash'), uid: 'hash', icon: <TbHash size={20} /> },
-    { name: t('walletDetails.tableTitles.timestamp'), uid: 'timestamp', icon: <LuClock size={20} /> },
-    { name: t('walletDetails.tableTitles.amount'), uid: 'amount', icon: <RiMoneyPoundCircleLine size={20} /> },
-    { name: t('walletDetails.tableTitles.fee'), uid: 'fee', icon: <HiOutlineCurrencyDollar size={20} /> },
-    { name: t('walletDetails.tableTitles.sender'), uid: 'sender', icon: <TbHash size={20} /> },
-    { name: t('walletDetails.tableTitles.recipient'), uid: 'recipient', icon: <TbHash size={20} /> },
+    {
+      name: t('walletDetails.tableTitles.hash'),
+      uid: 'hash',
+      icon: <TbHash size={20} />,
+    },
+    {
+      name: t('walletDetails.tableTitles.timestamp'),
+      uid: 'timestamp',
+      icon: <LuClock size={20} />,
+    },
+    {
+      name: t('walletDetails.tableTitles.amount'),
+      uid: 'amount',
+      icon: <RiMoneyPoundCircleLine size={20} />,
+    },
+    {
+      name: t('walletDetails.tableTitles.fee'),
+      uid: 'fee',
+      icon: <HiOutlineCurrencyDollar size={20} />,
+    },
+    {
+      name: t('walletDetails.tableTitles.sender'),
+      uid: 'sender',
+      icon: <TbHash size={20} />,
+    },
+    {
+      name: t('walletDetails.tableTitles.recipient'),
+      uid: 'recipient',
+      icon: <TbHash size={20} />,
+    },
   ]
-  
+
   const { data: walletAddress, loading: walletLoading } = useRequest<
     Wallet['address'],
-    any
+    Error[]
   >(async () => {
     if (!walletId) {
       throw new Error('Wallet ID is missing from the URL')
@@ -74,7 +98,7 @@ export const TransactionsTable = ({
 
   const { data: transactions = [], loading: transactionsLoading } = useRequest<
     Transaction[],
-    any
+    Error[]
   >(
     async () => {
       if (!walletAddress) return []
@@ -99,7 +123,7 @@ export const TransactionsTable = ({
     return transactions.filter((tx) =>
       tx.sender.toLowerCase().includes(filterValue.toLowerCase()),
     )
-  }, [transactions, filterValue])
+  }, [hasSearchFilter, transactions, filterValue])
 
   const pages = Math.ceil(filteredItems.length / PAGE_SIZE)
 
@@ -111,11 +135,11 @@ export const TransactionsTable = ({
 
   const onNextPage = useCallback(() => {
     if (page < pages) setPage(page + 1)
-  }, [page, pages])
+  }, [page, pages, setPage])
 
   const onPreviousPage = useCallback(() => {
     if (page > 1) setPage(page - 1)
-  }, [page])
+  }, [page, setPage])
 
   const bottomContent = useMemo(() => {
     return (
@@ -150,7 +174,7 @@ export const TransactionsTable = ({
         </div>
       </div>
     )
-  }, [items.length, page, pages, hasSearchFilter, t])
+  }, [page, pages, setPage, onPreviousPage, t, onNextPage])
 
   const renderCell = useCallback(
     (transaction: Transaction, columnKey: React.Key) => {

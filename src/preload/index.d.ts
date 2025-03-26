@@ -5,9 +5,9 @@ declare global {
     electron: ElectronAPI
     api: unknown
     dbAPI: {
-      getWallets: () => Promise<any>
-      getWalletByAddress: (address: string) => Promise<any>
-      getWalletById: (id: number) => Promise<any>
+      getWallets: () => Promise
+      getWalletByAddress: (address: string) => Promise
+      getWalletById: (id: number) => Promise
       insertWallet: (
         name: string,
         address: string,
@@ -39,10 +39,7 @@ declare global {
       generateMnemonic: (
         strength: 256 | 128 | 160 | 192 | 224 = 256,
       ) => Promise<string>
-      mnemonicToSeed: (
-        mnemonic: string,
-        passphrase: string = '',
-      ) => Promise<any>
+      mnemonicToSeed: (mnemonic: string, passphrase: string = '') => Promise
     }
     walletAPI: {
       walletFromSeed: (
@@ -51,7 +48,7 @@ declare global {
       walletFromPkHex: (
         pkHex: string,
       ) => Promise<{ address: string; privateKey: string }>
-      getWalletTransactions: (address: string) => Promise<any>
+      getWalletTransactions: (address: string) => Promise
       getBalance: (peerUrl: string, address: string) => Promise<string | null>
       fetchWarthogPrice: () => Promise<number>
       sendTransaction: (
@@ -60,7 +57,7 @@ declare global {
         fee: number,
         privateKey: string,
         peerUrl: string,
-      ) => Promise<any>
+      ) => Promise
       // walletFromPrivateKey: (pkHex: string) => Promise<any>
       // addressFromPublicKey: (pubKey: string) => Promise<any>
     }

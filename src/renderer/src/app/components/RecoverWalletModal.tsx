@@ -11,19 +11,21 @@ import {
   useDisclosure,
 } from '@heroui/react'
 import { PasswordInput } from '@renderer/components/PasswordInput'
-import { useState } from 'react'
+import { useState, type FC } from 'react'
 import { useTranslation } from 'react-i18next'
 import { useWallet } from '../wallets/WalletContext'
 
 const WALLET_PASSWORD_REGEX = /^(?=.*[A-Za-z])(?=.*\d)[A-Za-z\d]{8,}/
 
-export const RecoverWalletModal = () => {
+export const RecoverWalletModal: FC = () => {
   const { refreshAsync } = useWallet()
   const { isOpen, onClose, onOpen } = useDisclosure()
   const [password, setPassword] = useState('')
   const { t } = useTranslation()
 
-  const onSubmit = async (e: React.FormEvent<HTMLFormElement>) => {
+  const onSubmit = async (
+    e: React.FormEvent<HTMLFormElement>,
+  ): Promise<void> => {
     e.preventDefault()
     const formData = Object.fromEntries(new FormData(e.currentTarget)) as {
       wallet: string
@@ -69,8 +71,11 @@ export const RecoverWalletModal = () => {
 
       await refreshAsync()
       onClose()
-    } catch (error: any) {
-      if (error?.message?.includes('UNIQUE constraint failed')) {
+    } catch (error) {
+      if (
+        error instanceof Error &&
+        error?.message?.includes('UNIQUE constraint failed')
+      ) {
         addToast({
           title: t('toasts.duplicateWallet.title'),
           description: t('toasts.duplicateWallet.description'),
@@ -86,14 +91,16 @@ export const RecoverWalletModal = () => {
     }
   }
 
-  const validatePassword = (value: string) => {
+  const validatePassword = (value: string): string | undefined => {
     return !WALLET_PASSWORD_REGEX.test(value)
       ? t('recoverWallet.errorPassword')
       : undefined
   }
 
-  const validateConfirmPassword = (value: string) => {
-    return value !== password ? t('toasts.passwordMismatch.description') : undefined
+  const validateConfirmPassword = (value: string): string | undefined => {
+    return value !== password
+      ? t('toasts.passwordMismatch.description')
+      : undefined
   }
 
   return (

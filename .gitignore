@@ -3,11 +3,14 @@ dist
 out
 .DS_Store
 .eslintcache
-pacakge-lock.json
 *.log*
 .vscode
 *.bak
 *.db
 *.original
 .idea
+
+# Lock files
+package-lock.json
 pnpm-lock.yaml
+bun.lock

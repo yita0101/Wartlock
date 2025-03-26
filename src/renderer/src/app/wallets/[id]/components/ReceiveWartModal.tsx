@@ -9,18 +9,19 @@ import {
   ModalHeader,
   useDisclosure,
 } from '@heroui/react'
-import { GoPlus } from 'react-icons/go'
+import type { FC } from 'react'
 import { useTranslation } from 'react-i18next'
+import { GoPlus } from 'react-icons/go'
 
 type ReceiveWartModalProps = {
   address: string | undefined
 }
 
-export const ReceiveWartModal = ({ address }: ReceiveWartModalProps) => {
+export const ReceiveWartModal: FC<ReceiveWartModalProps> = ({ address }) => {
   const { isOpen, onClose, onOpen } = useDisclosure()
   const { t } = useTranslation()
 
-  const handleCopy = async () => {
+  const handleCopy = async (): Promise<void> => {
     if (!address) return
     await navigator.clipboard.writeText(address)
     addToast({

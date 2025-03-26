@@ -5,16 +5,18 @@ import {
   SidebarLink,
 } from '@renderer/components/ui/sidebar'
 import { useRequest } from 'ahooks'
-import { useState } from 'react'
+import { useState, type FC } from 'react'
+import { useTranslation } from 'react-i18next'
 import { FiSettings } from 'react-icons/fi'
 import { GoHomeFill } from 'react-icons/go'
 import { useParams } from 'react-router'
-import { useTranslation } from 'react-i18next'
 import { Wallet } from '../wallets/types'
 import { Logo } from './Logo'
 import { SwitchTheme } from './SwitchTheme'
 
-export const SidebarLayout = ({ children }: { children: React.ReactNode }) => {
+export const SidebarLayout: FC<{ children: React.ReactNode }> = ({
+  children,
+}) => {
   const [open, setOpen] = useState(false)
   const { walletId } = useParams<{ walletId: string }>()
   const { t } = useTranslation()
@@ -33,14 +35,14 @@ export const SidebarLayout = ({ children }: { children: React.ReactNode }) => {
     },
   ]
 
-  const { data: wallet } = useRequest<Wallet, any>(
+  const { data: wallet } = useRequest<Wallet, Error[]>(
     async () => window.dbAPI.getWalletById(Number(walletId)),
     {
       ready: !!walletId,
       cacheKey: walletId,
     },
   )
-  const { data: privateKey } = useRequest<string | null, any>(
+  const { data: privateKey } = useRequest<string | null, Error[]>(
     async () => window.storageAPI.getPrivateKey(wallet?.address || ''),
     {
       ready: !!wallet,

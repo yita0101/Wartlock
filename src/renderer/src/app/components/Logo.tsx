@@ -1,8 +1,9 @@
 import { Image } from '@heroui/react'
 import { LOGO } from '@renderer/constants/images'
+import type { FC } from 'react'
 import { Link } from 'react-router'
 
-export const Logo = () => {
+export const Logo: FC = () => {
   return (
     <div className="flex min-w-6 items-center gap-4 pl-3">
       <Image
@@ -20,7 +21,7 @@ export const Logo = () => {
   )
 }
 
-export const LogoIcon = () => {
+export const LogoIcon: FC = () => {
   return (
     <Link
       to="/"

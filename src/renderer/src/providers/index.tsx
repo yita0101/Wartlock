@@ -1,8 +1,8 @@
 import { HeroUIProvider, ToastProvider } from '@heroui/react'
-import React from 'react'
+import React, { FC } from 'react'
 import { ThemeProvider } from './ThemeProvider'
 
-const Providers = ({ children }: { children: React.ReactNode }) => {
+const Providers: FC<{ children: React.ReactNode }> = ({ children }) => {
   return (
     <HeroUIProvider>
       <ToastProvider />

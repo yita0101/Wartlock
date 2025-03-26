@@ -1,10 +1,10 @@
-import { addToast, Button, Form, Input, Card, Divider } from '@heroui/react'
-import { useEffect, useState } from 'react'
-import { useNavigate } from 'react-router'
+import { addToast, Button, Card, Divider, Form, Input } from '@heroui/react'
+import { useEffect, useState, type FC } from 'react'
 import { useTranslation } from 'react-i18next'
+import { useNavigate } from 'react-router'
 import { LanguageDropdown } from './LanguageDropdown'
 
-export const SettingsForm = () => {
+export const SettingsForm: FC = () => {
   const [, setPeer] = useState('')
   const [inputValue, setInputValue] = useState('')
   const navigate = useNavigate()
@@ -13,7 +13,7 @@ export const SettingsForm = () => {
   useEffect(() => {
     let isMounted = true
 
-    const fetchPeer = async () => {
+    const fetchPeer = async (): Promise<void> => {
       const fetchedPeer = await window.dbAPI.getPeer()
       if (isMounted) {
         setPeer(fetchedPeer)
@@ -23,16 +23,16 @@ export const SettingsForm = () => {
 
     fetchPeer()
 
-    return () => {
+    return (): void => {
       isMounted = false
     }
   }, [])
 
-  const handleCancel = () => {
+  const handleCancel = (): void => {
     navigate('/')
   }
 
-  const handleConfirm = async () => {
+  const handleConfirm = async (): Promise<void> => {
     if (!inputValue.trim()) {
       alert(t('settings.peerRequired'))
       return
@@ -46,7 +46,7 @@ export const SettingsForm = () => {
         color: 'success',
         timeout: 2000,
       })
-    } catch (error) {
+    } catch {
       addToast({
         title: t('settings.error'),
         description: t('settings.updateFailed'),
@@ -57,21 +57,18 @@ export const SettingsForm = () => {
   }
 
   return (
-    <Card className="w-full max-w-xl bg-default-50 dark:bg-default-100 border-none shadow-md">
-      <Form
-        className="p-10 space-y-6"
-        onSubmit={(e) => e.preventDefault()}
-      >
+    <Card className="w-full max-w-xl border-none bg-default-50 shadow-md dark:bg-default-100">
+      <Form className="space-y-6 p-10" onSubmit={(e) => e.preventDefault()}>
         <div className="space-y-5">
           <h3 className="text-xl font-bold text-default-800 dark:text-default-200">
             {t('settings.preferences')}
           </h3>
-          
+
           <Divider className="my-2" />
-          
+
           <div className="space-y-6 pt-2">
             <LanguageDropdown />
-            
+
             <Input
               type="text"
               name="peer"

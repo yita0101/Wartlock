@@ -1,10 +1,10 @@
 import { Button, Chip, Input, Navbar as NavbarComponent } from '@heroui/react'
 import { useRequest } from 'ahooks'
-import { useCallback } from 'react'
+import { useCallback, type FC } from 'react'
+import { useTranslation } from 'react-i18next'
 import { LuSearch } from 'react-icons/lu'
 import { RiLogoutCircleRLine } from 'react-icons/ri'
 import { useNavigate, useParams } from 'react-router'
-import { useTranslation } from 'react-i18next'
 import { CreateTransactionModal } from './CreateTransactionModal'
 import { ReceiveWartModal } from './ReceiveWartModal'
 
@@ -21,15 +21,18 @@ type WalletNavbarProps = {
   setPage: (value: number) => void
 }
 
-export const WalletNavbar = ({
+export const WalletNavbar: FC<WalletNavbarProps> = ({
   filterValue,
   setFilterValue,
   setPage,
-}: WalletNavbarProps) => {
+}) => {
   const { walletId } = useParams<{ walletId: string }>()
   const navigate = useNavigate()
   const { t } = useTranslation()
-  const { data: walletData, loading: walletLoading } = useRequest<Wallet, any>(
+  const { data: walletData, loading: walletLoading } = useRequest<
+    Wallet,
+    Error[]
+  >(
     async () => {
       if (!walletId) {
         throw new Error('Wallet ID is missing from the URL')
@@ -46,7 +49,7 @@ export const WalletNavbar = ({
 
   const { data: balanceData } = useRequest<
     { balanceWART: string | null; balanceUSD: number },
-    any
+    Error[]
   >(
     async () => {
       if (!walletData) {
@@ -123,7 +126,7 @@ export const WalletNavbar = ({
     [setFilterValue, setPage],
   )
 
-  const handleLogout = async () => {
+  const handleLogout = async (): Promise<void> => {
     if (walletData?.address) {
       await window.storageAPI.deletePrivateKey(String(walletData.address))
     }
@@ -147,7 +150,8 @@ export const WalletNavbar = ({
 
         <div className="flex items-center justify-center gap-4">
           <Chip variant="dot" color="warning">
-            <span className="font-light">{t('walletDetails.balanceWART')}</span>:{' '}
+            <span className="font-light">{t('walletDetails.balanceWART')}</span>
+            :{' '}
             <span className="font-medium text-warning">
               {balanceData?.balanceWART ?? t('walletDetails.loading')}
             </span>
@@ -156,7 +160,7 @@ export const WalletNavbar = ({
             <span className="font-light">{t('walletDetails.balanceUSD')}</span>:{' '}
             <span className="font-medium text-success">
               {balanceData?.balanceUSD !== undefined
-                ? `$${balanceData.balanceUSD.toFixed(2)}`
+                ? `${balanceData.balanceUSD.toFixed(2)}`
                 : t('walletDetails.loading')}
             </span>
           </Chip>

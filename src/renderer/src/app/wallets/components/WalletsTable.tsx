@@ -9,24 +9,32 @@ import {
   TableHeader,
   TableRow,
 } from '@heroui/react'
-import { useCallback, useMemo, useState } from 'react'
+import { useCallback, useMemo, useState, type FC } from 'react'
+import { useTranslation } from 'react-i18next'
 import { IoCalendarOutline } from 'react-icons/io5'
 import { LuWallet } from 'react-icons/lu'
 import { MdOutlineRadar } from 'react-icons/md'
 import { RiMoneyEuroCircleLine } from 'react-icons/ri'
-import { useTranslation } from 'react-i18next'
 import { type Wallet } from '../types'
 import { useWallet } from '../WalletContext'
 import { PasswordModal } from './PasswordModal'
 
-export const WalletsTable = () => {
+export const WalletsTable: FC = () => {
   const { wallets, loading } = useWallet()
   const [page, setPage] = useState(1)
   const { t } = useTranslation()
 
   const columns = [
-    { name: t('walletDetails.tableTitles.sender'), uid: 'name', icon: <LuWallet size={20} /> },
-    { name: t('walletDetails.tableTitles.recipient'), uid: 'address', icon: <MdOutlineRadar size={20} /> },
+    {
+      name: t('walletDetails.tableTitles.sender'),
+      uid: 'name',
+      icon: <LuWallet size={20} />,
+    },
+    {
+      name: t('walletDetails.tableTitles.recipient'),
+      uid: 'address',
+      icon: <MdOutlineRadar size={20} />,
+    },
     {
       name: t('walletDetails.balanceWART'),
       uid: 'lastIdentifiedBalance',
@@ -96,50 +104,58 @@ export const WalletsTable = () => {
         </div>
       </div>
     )
-  }, [items.length, page, pages, t])
+  }, [onNextPage, onPreviousPage, page, pages, t])
 
-  const renderCell = useCallback((wallet: Wallet, columnKey: React.Key) => {
-    const cellValue = wallets[columnKey as keyof Wallet]
+  const renderCell = useCallback(
+    (wallet: Wallet, columnKey: React.Key) => {
+      const cellValue = wallets[columnKey as keyof Wallet]
 
-    switch (columnKey) {
-      case 'name':
-        return (
-          <h3 className="text-bold text-sm capitalize text-default-700">
-            {wallet.name}
-          </h3>
-        )
-      case 'address':
-        return (
-          <div className="flex flex-col">
-            <p className="text-bold text-sm capitalize">{cellValue}</p>
-            <p className="text-bold text-sm text-default-400">
-              {wallet.address}
-            </p>
-          </div>
-        )
-      case 'lastIdentifiedBalance':
-        return (
-          <Chip
-            className="capitalize"
-            color="secondary"
-            size="sm"
-            variant="flat"
-          >
-            {wallet.last_balance}
-          </Chip>
-        )
-      case 'lastIdentifiedDate':
-        return (
-          <Chip className="capitalize" color="danger" size="sm" variant="flat">
-            {new Date(wallet.last_modified).toDateString()}
-          </Chip>
-        )
-      case 'actions':
-        return <PasswordModal walletId={wallet.id} />
-      default:
-        return cellValue
-    }
-  }, [])
+      switch (columnKey) {
+        case 'name':
+          return (
+            <h3 className="text-bold text-sm capitalize text-default-700">
+              {wallet.name}
+            </h3>
+          )
+        case 'address':
+          return (
+            <div className="flex flex-col">
+              <p className="text-bold text-sm capitalize">{cellValue}</p>
+              <p className="text-bold text-sm text-default-400">
+                {wallet.address}
+              </p>
+            </div>
+          )
+        case 'lastIdentifiedBalance':
+          return (
+            <Chip
+              className="capitalize"
+              color="secondary"
+              size="sm"
+              variant="flat"
+            >
+              {wallet.last_balance}
+            </Chip>
+          )
+        case 'lastIdentifiedDate':
+          return (
+            <Chip
+              className="capitalize"
+              color="danger"
+              size="sm"
+              variant="flat"
+            >
+              {new Date(wallet.last_modified).toDateString()}
+            </Chip>
+          )
+        case 'actions':
+          return <PasswordModal walletId={wallet.id} />
+        default:
+          return cellValue
+      }
+    },
+    [wallets],
+  )
 
   return (
     <Table

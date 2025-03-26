@@ -1,4 +1,5 @@
 import { Select, SelectItem } from '@heroui/react'
+import type { FC } from 'react'
 import { useTranslation } from 'react-i18next'
 import { BsGlobe } from 'react-icons/bs'
 
@@ -9,20 +10,20 @@ type Language = {
 
 const languages: Language[] = [
   { key: 'en', name: 'English' },
-  { key: 'zh', name: '中文' }
+  { key: 'zh', name: '中文' },
 ]
 
-export const LanguageDropdown = () => {
+export const LanguageDropdown: FC = () => {
   const { i18n, t } = useTranslation()
 
-  const handleSelectionChange = (value: string) => {
+  const handleSelectionChange = (value: string): void => {
     i18n.changeLanguage(value)
     localStorage.setItem('i18nextLng', value)
   }
 
   return (
     <div className="w-full">
-      <label className="block mb-2 text-md font-medium text-default-700 dark:text-default-300">
+      <label className="text-md mb-2 block font-medium text-default-700 dark:text-default-300">
         {t('settings.language')}
       </label>
       <Select
@@ -36,24 +37,28 @@ export const LanguageDropdown = () => {
         variant="bordered"
         className="max-w-full"
         classNames={{
-          trigger: 'bg-default-100 dark:bg-default-200/30 border-default-300 dark:border-default-500',
-          listbox: 'bg-default-50 dark:bg-default-800 border-default-300 dark:border-default-600',
+          trigger:
+            'bg-default-100 dark:bg-default-200/30 border-default-300 dark:border-default-500',
+          listbox:
+            'bg-default-50 dark:bg-default-800 border-default-300 dark:border-default-600',
           value: 'text-default-800 dark:text-default-200 font-medium',
           base: 'text-default-800 dark:text-default-200',
           innerWrapper: 'font-medium',
-          popoverContent: 'bg-default-50 dark:bg-default-800'
+          popoverContent: 'bg-default-50 dark:bg-default-800',
         }}
       >
         {languages.map((lang) => (
-          <SelectItem 
-            key={lang.key} 
+          <SelectItem
+            key={lang.key}
             textValue={lang.name}
-            className="text-default-800 dark:text-default-200 font-medium data-[hover=true]:bg-default-200 dark:data-[hover=true]:bg-default-700"
+            className="font-medium text-default-800 data-[hover=true]:bg-default-200 dark:text-default-200 dark:data-[hover=true]:bg-default-700"
           >
-            <span className="text-default-800 dark:text-default-200 font-medium">{lang.name}</span>
+            <span className="font-medium text-default-800 dark:text-default-200">
+              {lang.name}
+            </span>
           </SelectItem>
         ))}
       </Select>
     </div>
   )
-} 
+}

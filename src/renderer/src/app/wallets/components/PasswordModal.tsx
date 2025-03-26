@@ -11,20 +11,23 @@ import {
   useDisclosure,
 } from '@heroui/react'
 import { PasswordInput } from '@renderer/components/PasswordInput'
+import type { FC } from 'react'
+import { useTranslation } from 'react-i18next'
 import { LuEye } from 'react-icons/lu'
 import { useNavigate } from 'react-router'
-import { useTranslation } from 'react-i18next'
 
 interface PasswordModalProps {
   walletId: string
 }
 
-export const PasswordModal = ({ walletId }: PasswordModalProps) => {
+export const PasswordModal: FC<PasswordModalProps> = ({ walletId }) => {
   const { isOpen, onClose, onOpen } = useDisclosure()
   const navigate = useNavigate()
   const { t } = useTranslation()
 
-  const onSubmit = async (e: React.FormEvent<HTMLFormElement>) => {
+  const onSubmit = async (
+    e: React.FormEvent<HTMLFormElement>,
+  ): Promise<void> => {
     e.preventDefault()
 
     const formData = new FormData(e.currentTarget)
@@ -69,7 +72,10 @@ export const PasswordModal = ({ walletId }: PasswordModalProps) => {
 
   return (
     <>
-      <Tooltip content={t('passwordModal.viewDetails')} className="overflow-hidden">
+      <Tooltip
+        content={t('passwordModal.viewDetails')}
+        className="overflow-hidden"
+      >
         <button onClick={onOpen}>
           <LuEye size={20} />
         </button>

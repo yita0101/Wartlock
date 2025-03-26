@@ -1,8 +1,9 @@
+import { FC } from 'react'
 import { WalletsNavbar } from './components/WalletsNavbar'
 import { WalletsTable } from './components/WalletsTable'
 import { WalletProvider } from './WalletContext'
 
-const Wallets = () => {
+const Wallets: FC = () => {
   return (
     <WalletProvider>
       <main>

@@ -13,11 +13,11 @@ import {
 } from '@heroui/react'
 import { PasswordInput } from '@renderer/components/PasswordInput'
 import { useToggle } from 'ahooks'
-import { useState, useEffect } from 'react'
+import { useEffect, useState, type FC } from 'react'
+import { useTranslation } from 'react-i18next'
 import { GoPlus } from 'react-icons/go'
 import { IoIosEye, IoIosEyeOff } from 'react-icons/io'
 import { MdOutlineContentCopy } from 'react-icons/md'
-import { useTranslation } from 'react-i18next'
 import { useWallet } from '../wallets/WalletContext'
 
 const WALLET_PASSWORD_REGEX = /^(?=.*[A-Za-z])(?=.*\d)[A-Za-z\d]{8,}/
@@ -28,7 +28,7 @@ type CreateWalletData = {
   passwordConfirm: string
 }
 
-export const CreateWalletModal = () => {
+export const CreateWalletModal: FC = () => {
   const { refreshAsync } = useWallet()
   const { isOpen, onClose, onOpen } = useDisclosure()
   const [password, setPassword] = useState('')
@@ -42,7 +42,9 @@ export const CreateWalletModal = () => {
     setContinueText(t('common.continue'))
   }, [i18n.language, t])
 
-  const onSubmit = async (e: React.FormEvent<HTMLFormElement>) => {
+  const onSubmit = async (
+    e: React.FormEvent<HTMLFormElement>,
+  ): Promise<void> => {
     e.preventDefault()
     const formData = Object.fromEntries(new FormData(e.currentTarget))
     const { name, password, passwordConfirm } = formData as CreateWalletData
@@ -61,7 +63,7 @@ export const CreateWalletModal = () => {
       setMnemonic(generatedMnemonic)
       setWalletName(name)
       setPassword(password)
-    } catch (error) {
+    } catch {
       addToast({
         title: t('toasts.generateError.title'),
         description: t('toasts.generateError.description'),
@@ -70,7 +72,7 @@ export const CreateWalletModal = () => {
     }
   }
 
-  const handleCopy = async () => {
+  const handleCopy = async (): Promise<void> => {
     await navigator.clipboard.writeText(mnemonic)
     addToast({
       title: t('toasts.copied.title'),
@@ -79,7 +81,7 @@ export const CreateWalletModal = () => {
     })
   }
 
-  const finalizeWalletCreation = async () => {
+  const finalizeWalletCreation = async (): Promise<void> => {
     try {
       const { address, privateKey } =
         await window.walletAPI.walletFromSeed(mnemonic)
@@ -100,7 +102,7 @@ export const CreateWalletModal = () => {
       toggleShowMnemonic()
       await refreshAsync()
       onClose()
-    } catch (error) {
+    } catch {
       addToast({
         title: t('toasts.creationFailed.title'),
         description: t('toasts.creationFailed.description'),

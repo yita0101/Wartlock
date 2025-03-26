@@ -1,8 +1,8 @@
-import { useState } from 'react'
+import { useState, type FC } from 'react'
 import { TransactionsTable } from './components/TransactionsTable'
 import { WalletNavbar } from './components/WalletNavbar'
 
-const Wallet = () => {
+const Wallet: FC = () => {
   const [filterValue, setFilterValue] = useState('')
   const [page, setPage] = useState(1)
 

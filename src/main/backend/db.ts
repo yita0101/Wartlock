@@ -8,7 +8,7 @@ if (fs.existsSync('wartwallet.db')) {
   // Function to check if a column exists in a table
   function columnExists(table: string, column: string): boolean {
     const columns = db.prepare(`PRAGMA table_info(${table});`).all()
-    return columns.some(col => col.name === column)
+    return columns.some((col) => col.name === column)
   }
 
   // Function to check if a table exists
@@ -20,7 +20,10 @@ if (fs.existsSync('wartwallet.db')) {
   }
 
   // Fix missing columns by migrating the wallets table
-  if (!columnExists('wallets', 'name') || !columnExists('wallets', 'last_modified')) {
+  if (
+    !columnExists('wallets', 'name') ||
+    !columnExists('wallets', 'last_modified')
+  ) {
     console.log("Migrating 'wallets' table to add missing columns...")
 
     // Drop incomplete migration tables if they exist
@@ -120,13 +123,13 @@ if (count.count === 0) {
 }
 
 export class WalletDB {
-  static getWallets() {
+  static getWallets(): unknown[] {
     return db
       .prepare('SELECT *, last_modified as lastModified FROM wallets;')
       .all()
   }
 
-  static getWalletByAddress(address: string) {
+  static getWalletByAddress(address: string): unknown {
     return db
       .prepare(
         'SELECT *, last_modified as lastModified FROM wallets WHERE address = ?;',
@@ -134,7 +137,7 @@ export class WalletDB {
       .get(address)
   }
 
-  static getWalletById(id: number) {
+  static getWalletById(id: number): unknown {
     return db
       .prepare(
         'SELECT *, last_modified as lastModified FROM wallets WHERE id = ?;',
@@ -142,23 +145,28 @@ export class WalletDB {
       .get(id)
   }
 
-  static insertWallet(name: string, address: string, pk: string, salt: string) {
+  static insertWallet(
+    name: string,
+    address: string,
+    pk: string,
+    salt: string,
+  ): void {
     db.prepare(
       'INSERT INTO wallets (name, address, pk, salt, last_modified) VALUES (?, ?, ?, ?, CURRENT_TIMESTAMP);',
     ).run(name, address, pk, salt)
   }
 
-  static updateBalance(address: string, balance: string) {
+  static updateBalance(address: string, balance: string): void {
     db.prepare(
       'UPDATE wallets SET last_balance = ?, last_modified = CURRENT_TIMESTAMP WHERE address = ?;',
     ).run(balance, address)
   }
 
-  static deleteWallet(address: string) {
+  static deleteWallet(address: string): void {
     db.prepare('DELETE FROM wallets WHERE address = ?;').run(address)
   }
 
-  static updatePeer(peer: string) {
+  static updatePeer(peer: string): void {
     db.prepare(
       "UPDATE data SET value = ?, last_modified = CURRENT_TIMESTAMP WHERE key = 'peer';",
     ).run(peer)

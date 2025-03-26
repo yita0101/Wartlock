@@ -6,11 +6,12 @@ import {
 } from '@heroui/react'
 import { CreateWalletModal } from '@renderer/app/components/CreateWalletModal'
 import { RecoverWalletModal } from '@renderer/app/components/RecoverWalletModal'
+import type { FC } from 'react'
 import { useTranslation } from 'react-i18next'
 
-export const WalletsNavbar = () => {
+export const WalletsNavbar: FC = () => {
   const { t } = useTranslation()
-  
+
   return (
     <NavbarComponent maxWidth="full" className="bg-transparent py-4">
       <NavbarBrand>

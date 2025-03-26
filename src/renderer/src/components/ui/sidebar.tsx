@@ -5,6 +5,7 @@ import React, {
   useContext,
   useState,
   type ComponentProps,
+  type FC,
 } from 'react'
 import { LuMenu, LuX } from 'react-icons/lu'
 import { NavLink } from 'react-router'
@@ -23,7 +24,7 @@ interface SidebarContextProps {
 
 const SidebarContext = createContext<SidebarContextProps | undefined>(undefined)
 
-export const useSidebar = () => {
+export const useSidebar = (): SidebarContextProps => {
   const context = useContext(SidebarContext)
   if (!context) {
     throw new Error('useSidebar must be used within a SidebarProvider')
@@ -31,17 +32,12 @@ export const useSidebar = () => {
   return context
 }
 
-export const SidebarProvider = ({
-  children,
-  open: openProp,
-  setOpen: setOpenProp,
-  animate = true,
-}: {
+export const SidebarProvider: FC<{
   children: React.ReactNode
   open?: boolean
   setOpen?: React.Dispatch<React.SetStateAction<boolean>>
   animate?: boolean
-}) => {
+}> = ({ children, open: openProp, setOpen: setOpenProp, animate = true }) => {
   const [openState, setOpenState] = useState(false)
 
   const open = openProp !== undefined ? openProp : openState
@@ -54,17 +50,12 @@ export const SidebarProvider = ({
   )
 }
 
-export const Sidebar = ({
-  children,
-  open,
-  setOpen,
-  animate,
-}: {
+export const Sidebar: FC<{
   children: React.ReactNode
   open?: boolean
   setOpen?: React.Dispatch<React.SetStateAction<boolean>>
   animate?: boolean
-}) => {
+}> = ({ children, open, setOpen, animate }) => {
   return (
     <SidebarProvider open={open} setOpen={setOpen} animate={animate}>
       {children}
@@ -72,7 +63,7 @@ export const Sidebar = ({
   )
 }
 
-export const SidebarBody = (props: ComponentProps<typeof motion.div>) => {
+export const SidebarBody: FC<ComponentProps<typeof motion.div>> = (props) => {
   return (
     <>
       <DesktopSidebar {...props} />
@@ -81,11 +72,11 @@ export const SidebarBody = (props: ComponentProps<typeof motion.div>) => {
   )
 }
 
-export const DesktopSidebar = ({
+export const DesktopSidebar: FC<ComponentProps<typeof motion.div>> = ({
   className,
   children,
   ...props
-}: ComponentProps<typeof motion.div>) => {
+}) => {
   const { open, setOpen, animate } = useSidebar()
   return (
     <>
@@ -107,11 +98,11 @@ export const DesktopSidebar = ({
   )
 }
 
-export const MobileSidebar = ({
+export const MobileSidebar: FC<ComponentProps<'div'>> = ({
   className,
   children,
   ...props
-}: ComponentProps<'div'>) => {
+}) => {
   const { open, setOpen } = useSidebar()
 
   return (
@@ -155,14 +146,12 @@ export const MobileSidebar = ({
   )
 }
 
-export const SidebarLink = ({
-  link,
-  className,
-  ...props
-}: {
-  link: Links
-  className?: string
-} & Omit<ComponentProps<typeof NavLink>, 'to'>) => {
+export const SidebarLink: FC<
+  {
+    link: Links
+    className?: string
+  } & Omit<ComponentProps<typeof NavLink>, 'to'>
+> = ({ link, className, ...props }) => {
   const { open, animate } = useSidebar()
   return (
     <NavLink
